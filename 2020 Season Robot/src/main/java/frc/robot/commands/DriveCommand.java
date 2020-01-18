@@ -49,13 +49,14 @@ public class DriveCommand extends CommandBase {
 
     SmartDashboard.putString("left","" + speedLeft );
     SmartDashboard.putString("right","" + speedRight );
+    SmartDashboard.putString("l Distance","" + m_subsystem.getAverageEncoderDistance() );
 
 
     m_subsystem.SetLeftDriveSpeed(speedLeft);
     m_subsystem.SetRightDriveSpeed(speedRight);
 
 
-    m_ColorWheelSystem.ReadColorSensor();
+    //m_ColorWheelSystem.ReadColorSensor();
 
 
   }
