@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.util.NavSensor;
 
 /**
  * An example command that uses an example subsystem.
@@ -22,6 +23,9 @@ public class DriveCommand extends CommandBase {
   private final DriveSubsystem m_subsystem;
   private final ColorWheelSystem m_ColorWheelSystem;
   private final XboxController m_driverController = new XboxController(0);
+  //NavSensor gyro = NavSensor.getInstance();
+  private final NavSensor m_gyro = NavSensor.getInstance();
+
   /**
    * Creates a new ExampleCommand.
    *
@@ -50,6 +54,7 @@ public class DriveCommand extends CommandBase {
     SmartDashboard.putString("left","" + speedLeft );
     SmartDashboard.putString("right","" + speedRight );
     SmartDashboard.putString("l Distance","" + m_subsystem.getAverageEncoderDistance() );
+    SmartDashboard.putString("Nav X angle","" + m_gyro.getRawAngle());
 
 
     m_subsystem.SetLeftDriveSpeed(speedLeft);

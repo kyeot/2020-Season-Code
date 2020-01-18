@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants.DriveConstants;
 
+
 public class DriveSubsystem extends SubsystemBase {
 
   
@@ -26,8 +27,9 @@ public class DriveSubsystem extends SubsystemBase {
   VictorSPX leftMotorV2;
   VictorSPX rightMotorV2;
 
-  private final Encoder m_leftEncoder =
-  new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
+
+
+  private final Encoder m_leftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
 
 // The right-side drive encoder
 //private final Encoder m_rightEncoder =

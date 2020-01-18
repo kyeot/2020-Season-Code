@@ -30,5 +30,7 @@ public class Constants {
             (kWheelDiameterInches * Math.PI) / (double) kEncoderCPR;
       }
 
+      public static final double kGyroMaxAge = 0.6;   
+      public static final double kRobotFront = 180;
 
 }
