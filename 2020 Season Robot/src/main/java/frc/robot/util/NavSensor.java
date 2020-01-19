@@ -62,6 +62,7 @@ public class NavSensor {
 		offset = angle - north;
 	}
 
+
 	public void updateHistory() {
 		history.put(Timestamp.setNewTime().getTime(), new Bearing(getAngle(true)));
 		ArrayList<Double> toRemove = new ArrayList<Double>();
