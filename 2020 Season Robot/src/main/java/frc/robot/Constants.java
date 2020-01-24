@@ -14,6 +14,9 @@ public class Constants {
 
     public static final int kDriveController = 0;
 
+    public static final double kGyroMaxAge = 0.6;   
+    public static final double kRobotFront = 180;
+
     public static final class DriveConstants {
         public static final int kLeftMotor1Port = 13;
         public static final int kLeftMotor2Port = 15;
@@ -55,7 +58,10 @@ public class Constants {
         public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
       }
 
-      public static final double kGyroMaxAge = 0.6;   
-      public static final double kRobotFront = 180;
+      public static final class ShooterConstants {
+        public static final int kShooterMotorPort = 1;
+      }
+
+
 
 }

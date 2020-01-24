@@ -10,13 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TurnRight90;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.commands.TurnToAngle;
 import frc.robot.Constants;
 
 
@@ -31,7 +32,7 @@ public class RobotContainer {
 
   private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
   private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
-
+  private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
 
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
@@ -62,10 +63,15 @@ public class RobotContainer {
     new JoystickButton(mDriverController, Button.kX.value)
         .whenPressed(new TurnRight90(mDriveSubsystem).withTimeout(8));
 
-    /*
-    new JoystickButton(m_driverController, Button.kA.value)
+        
+        new JoystickButton(mDriverController, Button.kA.value)
+        .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
+
+         /*
+    new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(() -> m_robotArm.setGoal(2), m_robotArm);
 
+       
     // Move the arm to neutral position when the 'B' button is pressed.
     new JoystickButton(m_driverController, Button.kB.value)
         .whenPressed(() -> m_robotArm.setGoal(Constants.ArmConstants.kArmOffsetRads), m_robotArm);

@@ -15,7 +15,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants.DriveConstants;
 import com.kauailabs.navx.frc.AHRS;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,8 +32,6 @@ public class DriveSubsystem extends SubsystemBase {
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 
-//r 216 = 10ft
-//l 219 = 10 ft
   private final Encoder mLeftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
   private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);
 
