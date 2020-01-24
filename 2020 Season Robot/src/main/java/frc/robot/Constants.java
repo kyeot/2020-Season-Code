@@ -17,6 +17,9 @@ public class Constants {
     public static final double kGyroMaxAge = 0.6;   
     public static final double kRobotFront = 180;
 
+    public static final int kIntakeMotorPort = 2;
+    public static final double kIntakeMotorSpeed = 0.8;
+
     public static final class DriveConstants {
         public static final int kLeftMotor1Port = 13;
         public static final int kLeftMotor2Port = 15;

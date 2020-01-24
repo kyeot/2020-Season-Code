@@ -16,6 +16,7 @@ import frc.robot.commands.TurnRight90;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -35,6 +36,7 @@ public class RobotContainer {
   private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
   private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
+  private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
 
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
