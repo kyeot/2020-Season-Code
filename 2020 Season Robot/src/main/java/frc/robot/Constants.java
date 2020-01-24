@@ -25,11 +25,18 @@ public class Constants {
         public static final boolean kLeftEncoderReversed = false;
         public static final boolean kRightEncoderReversed = true;
     
+        //Using Feet to start
+        //public final double kEncoderPulsePerFoot = 21.75;
+        //public static final double kEncoderDistancePerPulse = 0.045977;
+
+        public static final double kEncoderFootPerDistance = 21.75;
+
         public static final int kEncoderCPR = 1024;
         public static final double kWheelDiameterInches = 6;
         public static final double kEncoderDistancePerPulse =
             // Assumes the encoders are directly mounted on the wheel shafts
             (kWheelDiameterInches * Math.PI) / (double) kEncoderCPR;
+
 
         public static final boolean kGyroReversed = false;
 
