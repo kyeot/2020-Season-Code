@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TurnRight90;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants;
@@ -37,7 +39,8 @@ public class RobotContainer {
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
 
-  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem,mColorWheelSubsystem,mDriverController);
+  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem,mDriverController);
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -46,7 +49,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    mDriveSubsystem.setDefaultCommand(new DriveCommand(mDriveSubsystem,mColorWheelSubsystem,mDriverController));
+    mDriveSubsystem.setDefaultCommand(new DriveCommand(mDriveSubsystem,mDriverController));
 
 
   }
@@ -66,6 +69,20 @@ public class RobotContainer {
         
         new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
+
+        new JoystickButton(mDriverController, Button.kB.value)
+        .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10));
+
+        new JoystickButton(mDriverController, Button.kY.value)
+        .whenPressed(
+
+          new SequentialCommandGroup(
+            new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10),
+            new TurnRight90(mDriveSubsystem).withTimeout(8),
+            new TurnRight90(mDriveSubsystem).withTimeout(8),
+            new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10))
+        );
+
 
          /*
     new JoystickButton(mDriverController, Button.kA.value)

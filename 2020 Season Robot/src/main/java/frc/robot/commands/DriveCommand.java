@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,7 +20,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem mDriveSubSystem;
-  private final ColorWheelSystem mColorWheelSystem;
   private final XboxController mDriverController; 
 
 
@@ -30,13 +28,12 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem drivesubsystem, ColorWheelSystem colorwheelsystem,XboxController drivercontroller) {
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller) {
     mDriveSubSystem = drivesubsystem;
-    mColorWheelSystem = colorwheelsystem;
     mDriverController = drivercontroller;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivesubsystem);
-    addRequirements(colorwheelsystem);
+
   }
 
   // Called when the command is initially scheduled.
