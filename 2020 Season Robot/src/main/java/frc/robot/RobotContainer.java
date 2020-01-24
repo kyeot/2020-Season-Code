@@ -10,9 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.TurnRight90;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import static edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.commands.TurnToAngle;
+import frc.robot.Constants;
 
 
 
@@ -23,14 +28,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final ColorWheelSystem m_colorWheelSubsystem = new ColorWheelSystem();
+
+  private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
+  private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
 
 
-  private final DriveCommand m_autoCommand = new DriveCommand(m_driveSubsystem,m_colorWheelSubsystem);
 
+  private final XboxController mDriverController = new XboxController(Constants.kDriveController);
 
+  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem,mColorWheelSubsystem,mDriverController);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -39,10 +45,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-
-
-
-    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem,m_colorWheelSubsystem));
+    mDriveSubsystem.setDefaultCommand(new DriveCommand(mDriveSubsystem,mColorWheelSubsystem,mDriverController));
 
 
   }
@@ -54,6 +57,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+    new JoystickButton(mDriverController, Button.kX.value)
+        .whenPressed(new TurnRight90(mDriveSubsystem).withTimeout(8));
 
     /*
     new JoystickButton(m_driverController, Button.kA.value)

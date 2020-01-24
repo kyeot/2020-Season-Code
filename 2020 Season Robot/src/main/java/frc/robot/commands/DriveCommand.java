@@ -13,52 +13,57 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.robot.util.NavSensor;
+
 
 /**
  * An example command that uses an example subsystem.
  */
 public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveSubsystem m_subsystem;
-  private final ColorWheelSystem m_ColorWheelSystem;
-  private final XboxController m_driverController = new XboxController(0);
-  //NavSensor gyro = NavSensor.getInstance();
-  private final NavSensor m_gyro = NavSensor.getInstance();
+  private final DriveSubsystem mDriveSubSystem;
+  private final ColorWheelSystem mColorWheelSystem;
+  private final XboxController mDriverController; 
+
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem subsystem, ColorWheelSystem colorwheelsystem) {
-    m_subsystem = subsystem;
-    m_ColorWheelSystem = colorwheelsystem;
+  public DriveCommand( DriveSubsystem drivesubsystem, ColorWheelSystem colorwheelsystem,XboxController drivercontroller) {
+    mDriveSubSystem = drivesubsystem;
+    mColorWheelSystem = colorwheelsystem;
+    mDriverController = drivercontroller;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(drivesubsystem);
     addRequirements(colorwheelsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    mDriveSubSystem.resetEncoders();
+    mDriveSubSystem.zeroHeading();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double speedLeft = m_driverController.getY(Hand.kLeft );
-    double speedRight= m_driverController.getY(Hand.kRight);
+    double speedLeft = mDriverController.getY(Hand.kLeft );
+    double speedRight= mDriverController.getY(Hand.kRight);
 
     SmartDashboard.putString("left","" + speedLeft );
     SmartDashboard.putString("right","" + speedRight );
-    SmartDashboard.putString("l Distance","" + m_subsystem.getAverageEncoderDistance() );
-    SmartDashboard.putString("Nav X angle","" + m_gyro.getRawAngle());
+    SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
+    SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
+    SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
 
 
-    m_subsystem.SetLeftDriveSpeed(speedLeft);
-    m_subsystem.SetRightDriveSpeed(speedRight);
+    mDriveSubSystem.SetLeftDriveSpeed(speedLeft);
+    mDriveSubSystem.SetRightDriveSpeed(speedRight);
 
 
     //m_ColorWheelSystem.ReadColorSensor();

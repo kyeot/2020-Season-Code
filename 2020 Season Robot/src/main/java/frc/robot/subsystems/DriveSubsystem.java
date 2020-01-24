@@ -14,7 +14,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants.DriveConstants;
-
+import com.kauailabs.navx.frc.AHRS;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -27,15 +30,13 @@ public class DriveSubsystem extends SubsystemBase {
   VictorSPX leftMotorV2;
   VictorSPX rightMotorV2;
 
+  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 
-  private final Encoder m_leftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
-
-// The right-side drive encoder
-//private final Encoder m_rightEncoder =
-  //new Encoder(DriveConstants.kRightEncoderPorts[0], DriveConstants.kRightEncoderPorts[1],
-    //          DriveConstants.kRightEncoderReversed);
-
+//r 216 = 10ft
+//l 219 = 10 ft
+  private final Encoder mLeftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
+  private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);
 
 
   public DriveSubsystem() {
@@ -48,13 +49,14 @@ public class DriveSubsystem extends SubsystemBase {
     rightMotorV1 = new VictorSPX(DriveConstants.kRightMotor1Port);
     rightMotorV2 = new VictorSPX(DriveConstants.kRightMotor2Port);
 
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    //m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    mLeftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    mRightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
      
-    leftMotorV1.setNeutralMode(NeutralMode.Coast);
-    leftMotorV2.setNeutralMode(NeutralMode.Coast);
-    rightMotorV1.setNeutralMode(NeutralMode.Coast);
-    rightMotorV2.setNeutralMode(NeutralMode.Coast);
+    leftMotorV1.setNeutralMode(NeutralMode.Brake);
+    leftMotorV2.setNeutralMode(NeutralMode.Brake);
+    rightMotorV1.setNeutralMode(NeutralMode.Brake);
+    rightMotorV2.setNeutralMode(NeutralMode.Brake);
+
 
   }
 
@@ -70,8 +72,50 @@ public class DriveSubsystem extends SubsystemBase {
     rightMotorV2.set(ControlMode.PercentOutput, speed);
   }
 
+  public void resetEncoders() {
+    mLeftEncoder.reset();
+    mRightEncoder.reset();
+  }
+
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance()); // + m_rightEncoder.getDistance()) / 2.0;
+    return (mLeftEncoder.getDistance()  + mRightEncoder.getDistance() / 2.0);
+  }
+
+  public double getLeftEncoderDistance() {
+    return (mLeftEncoder.getDistance());
+  }
+
+  public double getRightEncoderDistance() {
+    return ( mRightEncoder.getDistance());
+  }
+
+    /**
+   * Zeroes the heading of the robot.
+   */
+  public void zeroHeading() {
+    gyro.reset();
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from 180 to 180
+   */
+  public double getHeading() {
+    SmartDashboard.putString("QZ: ","" + gyro.getQuaternionZ());
+    SmartDashboard.putString("QY: ","" + gyro.getQuaternionY());
+    SmartDashboard.putString("QX: ","" + gyro.getQuaternionZ());
+    SmartDashboard.putString("Yaw: ","" + gyro.getYaw()  );
+    return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   @Override
