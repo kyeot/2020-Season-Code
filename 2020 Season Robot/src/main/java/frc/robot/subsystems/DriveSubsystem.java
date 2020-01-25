@@ -59,14 +59,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void SetLeftDriveSpeed(double speed) {
     //leftMotor.set(ControlMode.PercentOutput, speed);
-    leftMotorV1.set(ControlMode.PercentOutput, -speed);
-    leftMotorV2.set(ControlMode.PercentOutput, -speed);
+    leftMotorV1.set(ControlMode.PercentOutput, speed);
+    leftMotorV2.set(ControlMode.PercentOutput, speed);
   }
 
   public void SetRightDriveSpeed(double speed) {
     //rightMotor.set(ControlMode.PercentOutput, speed);
-    rightMotorV1.set(ControlMode.PercentOutput, speed);
-    rightMotorV2.set(ControlMode.PercentOutput, speed);
+    rightMotorV1.set(ControlMode.PercentOutput, -speed);
+    rightMotorV2.set(ControlMode.PercentOutput, -speed);
   }
 
   public void resetEncoders() {
@@ -99,9 +99,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    SmartDashboard.putString("QZ: ","" + gyro.getQuaternionZ());
-    SmartDashboard.putString("QY: ","" + gyro.getQuaternionY());
-    SmartDashboard.putString("QX: ","" + gyro.getQuaternionZ());
+
     SmartDashboard.putString("Yaw: ","" + gyro.getYaw()  );
     return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }

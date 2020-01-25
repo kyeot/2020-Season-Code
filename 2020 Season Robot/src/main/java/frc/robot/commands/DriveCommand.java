@@ -59,8 +59,8 @@ public class DriveCommand extends CommandBase {
     SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
 
 
-    mDriveSubSystem.SetLeftDriveSpeed(speedLeft);
-    mDriveSubSystem.SetRightDriveSpeed(speedRight);
+    mDriveSubSystem.SetLeftDriveSpeed(-speedLeft);
+    mDriveSubSystem.SetRightDriveSpeed(-speedRight);
 
 
     //m_ColorWheelSystem.ReadColorSensor();

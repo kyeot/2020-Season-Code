@@ -36,6 +36,7 @@ public class Constants {
         //public static final double kEncoderDistancePerPulse = 0.045977;
 
         public static final double kEncoderFootPerDistance = 21.75;
+        public static final double kAutonomousDriveSpeed = 0.2;
 
         public static final int kEncoderCPR = 1024;
         public static final double kWheelDiameterInches = 6;

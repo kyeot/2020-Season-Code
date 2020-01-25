@@ -14,8 +14,11 @@ import frc.robot.subsystems.DriveSubsystem;
 public class TurnLeft90 extends CommandBase {
 
   private final DriveSubsystem mDriveSubsystem;
+  private int iDegrees = 0;
 
-  public TurnLeft90(DriveSubsystem drive) {
+  public TurnLeft90(DriveSubsystem drive,int degrees) {
+
+    iDegrees = degrees;
 
     mDriveSubsystem = drive;
     addRequirements(drive);
@@ -32,8 +35,8 @@ public class TurnLeft90 extends CommandBase {
   @Override
   public void execute() {
 
-    mDriveSubsystem.SetRightDriveSpeed(-0.2);
-    mDriveSubsystem.SetLeftDriveSpeed(0.2);
+    mDriveSubsystem.SetRightDriveSpeed(0.2);
+    mDriveSubsystem.SetLeftDriveSpeed(-0.2);
 
 
   }
@@ -46,7 +49,7 @@ public class TurnLeft90 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mDriveSubsystem.getHeading() > -66){
+    if (mDriveSubsystem.getHeading() > -iDegrees){
       return false;
     }
     else {

@@ -10,11 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveADistanceInFeet extends CommandBase {
 
   private final DriveSubsystem mDriveSubsystem;
   private final double mDistanceInFeet;
+  private boolean bFirstRun;
 
   public DriveADistanceInFeet(DriveSubsystem drive, double distanceinfeet) {
 
@@ -28,14 +30,30 @@ public class DriveADistanceInFeet extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    bFirstRun = true;
     mDriveSubsystem.resetEncoders();
+    mDriveSubsystem.zeroHeading();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mDriveSubsystem.SetRightDriveSpeed(-0.2);
-    mDriveSubsystem.SetLeftDriveSpeed(-0.2);
+
+    //robotdrive.drive(SPEED, Gyro.getAngle() * .03);
+    if (bFirstRun == true) {
+      SmartDashboard.putString("Initial Heading: ","" + mDriveSubsystem.getHeading()  );
+      mDriveSubsystem.SetRightDriveSpeed(Constants.DriveConstants.kAutonomousDriveSpeed  );
+      mDriveSubsystem.SetLeftDriveSpeed(Constants.DriveConstants.kAutonomousDriveSpeed );
+      bFirstRun = false;
+    }
+    else {
+      SmartDashboard.putString("Commnad Heading: ","" + mDriveSubsystem.getHeading()  );
+      mDriveSubsystem.SetRightDriveSpeed(Constants.DriveConstants.kAutonomousDriveSpeed + (Constants.DriveConstants.kAutonomousDriveSpeed * mDriveSubsystem.getHeading() * .03 ));
+      mDriveSubsystem.SetLeftDriveSpeed(Constants.DriveConstants.kAutonomousDriveSpeed );
+    }
+
+
+
   }
 
   // Called once the command ends or is interrupted.

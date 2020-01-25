@@ -33,8 +33,8 @@ public class TurnRight90 extends CommandBase {
   @Override
   public void execute() {
 
-    mDriveSubsystem.SetRightDriveSpeed(0.2);
-    mDriveSubsystem.SetLeftDriveSpeed(-0.2);
+    mDriveSubsystem.SetRightDriveSpeed(-0.2);
+    mDriveSubsystem.SetLeftDriveSpeed(0.2);
 
 
   }
@@ -47,11 +47,12 @@ public class TurnRight90 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mDriveSubsystem.getHeading() < 66){
+    if (mDriveSubsystem.getHeading() < 90){
       return false;
     }
     else {
- 
+      mDriveSubsystem.SetRightDriveSpeed(0);
+      mDriveSubsystem.SetLeftDriveSpeed(0);
       return true;
     }
     
