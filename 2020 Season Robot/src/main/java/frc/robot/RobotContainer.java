@@ -13,6 +13,7 @@ import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TurnRight90;
+import frc.robot.commands.TurnLeft90;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
@@ -66,23 +67,26 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new TurnRight90(mDriveSubsystem).withTimeout(8));
+        .whenPressed(new TurnLeft90(mDriveSubsystem).withTimeout(8));
 
         
         new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
 
         new JoystickButton(mDriverController, Button.kB.value)
-        .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10));
+        .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
 
         new JoystickButton(mDriverController, Button.kY.value)
         .whenPressed(
 
           new SequentialCommandGroup(
-            new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10),
-            new TurnRight90(mDriveSubsystem).withTimeout(8),
-            new TurnRight90(mDriveSubsystem).withTimeout(8),
-            new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10))
+            new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
+            new TurnLeft90(mDriveSubsystem).withTimeout(8),
+            new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
+            new TurnLeft90(mDriveSubsystem).withTimeout(8),
+            new ShooterCommand(mShooterSubsystem).withTimeout(5)
+            )
+            
         );
 
 

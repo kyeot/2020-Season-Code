@@ -50,7 +50,8 @@ public class TurnLeft90 extends CommandBase {
       return false;
     }
     else {
- 
+      mDriveSubsystem.SetRightDriveSpeed(0);
+      mDriveSubsystem.SetLeftDriveSpeed(0);
       return true;
     }
     
