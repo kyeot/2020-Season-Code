@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants.DriveConstants;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Servo;
@@ -31,7 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
   VictorSPX rightMotorV2;
 
 
-  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+  //private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 
   private final Encoder mLeftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
@@ -64,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase {
     leftMotorV1.set(ControlMode.PercentOutput, speed);
     leftMotorV2.set(ControlMode.PercentOutput, speed);
 
-    //LEDPort1.setSpeed(-0.95);
+    //LEDPort1.setSpeed(speed);
 
   }
 
@@ -96,7 +96,7 @@ public class DriveSubsystem extends SubsystemBase {
    * Zeroes the heading of the robot.
    */
   public void zeroHeading() {
-    gyro.reset();
+    //gyro.reset();
   }
 
   /**
@@ -105,9 +105,9 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-
-    SmartDashboard.putString("Yaw: ","" + gyro.getYaw()  );
-    return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return 0;
+    //SmartDashboard.putString("Yaw: ","" + gyro.getYaw()  );
+    //return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   /**
@@ -116,7 +116,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    //return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return 0;
   }
 
   @Override

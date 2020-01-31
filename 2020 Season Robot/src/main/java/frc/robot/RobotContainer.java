@@ -71,7 +71,7 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new LEDCommand(mLEDSubsystem).withTimeout(5) );
+        .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController));
 
         
         new JoystickButton(mDriverController, Button.kA.value)

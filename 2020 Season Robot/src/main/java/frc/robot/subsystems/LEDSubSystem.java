@@ -8,21 +8,24 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 
 public class LEDSubSystem extends SubsystemBase {
 
 
-  Talon ledController;
+  Spark ledController;
 
   public LEDSubSystem() {
-    ledController = new Talon(0);
+    ledController = new Spark(0);
+
   }
 
   public void SetLEDMode(double speed) {
     //rightMotor.set(ControlMode.PercentOutput, speed);
     //LEDPort2.setAngle(30);
-    ledController.setSpeed(speed);
+     ledController.setSpeed(speed);
+    
   }
 
 
