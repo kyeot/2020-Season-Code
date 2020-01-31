@@ -17,6 +17,7 @@ import frc.robot.Constants.DriveConstants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Servo;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -28,6 +29,7 @@ public class DriveSubsystem extends SubsystemBase {
   VictorSPX rightMotorV1;
   VictorSPX leftMotorV2;
   VictorSPX rightMotorV2;
+
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -61,12 +63,16 @@ public class DriveSubsystem extends SubsystemBase {
     //leftMotor.set(ControlMode.PercentOutput, speed);
     leftMotorV1.set(ControlMode.PercentOutput, speed);
     leftMotorV2.set(ControlMode.PercentOutput, speed);
+
+    //LEDPort1.setSpeed(-0.95);
+
   }
 
   public void SetRightDriveSpeed(double speed) {
     //rightMotor.set(ControlMode.PercentOutput, speed);
     rightMotorV1.set(ControlMode.PercentOutput, -speed);
     rightMotorV2.set(ControlMode.PercentOutput, -speed);
+
   }
 
   public void resetEncoders() {

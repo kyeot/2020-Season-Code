@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.LEDCommand;
 import frc.robot.commands.TurnRight90;
 import frc.robot.commands.TurnLeft90;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,6 +40,8 @@ public class RobotContainer {
   private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
   private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
+
 
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
@@ -67,7 +71,7 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new TurnLeft90(mDriveSubsystem,90).withTimeout(8));
+        .whenPressed(new LEDCommand(mLEDSubsystem).withTimeout(5) );
 
         
         new JoystickButton(mDriverController, Button.kA.value)
