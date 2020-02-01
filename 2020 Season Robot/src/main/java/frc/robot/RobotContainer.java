@@ -43,7 +43,7 @@ public class RobotContainer {
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
   private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
-  private final LiftSubSystem mLiftSubsystem new LiftSubSystem();
+  private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
 
 
 
