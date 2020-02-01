@@ -17,6 +17,7 @@ import frc.robot.Constants.DriveConstants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -24,17 +25,17 @@ public class DriveSubsystem extends SubsystemBase {
 	TalonSRX leftMotor;
   TalonSRX rightMotor;
 
-  VictorSPX leftMotorV1;
-  VictorSPX rightMotorV1;
-  VictorSPX leftMotorV2;
-  VictorSPX rightMotorV2;
+  VictorSPX mLeftMotorV1;
+  VictorSPX mRightMotorV1;
+  VictorSPX mLeftMotorV2;
+  VictorSPX mRightMotorV2;
 
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 
-  private final Encoder mLeftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
-  private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);
+  private final Encoder mLeftEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
+  private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
 
 
   public DriveSubsystem() {
@@ -42,26 +43,35 @@ public class DriveSubsystem extends SubsystemBase {
 		//leftMotor = new TalonSRX(11); //Constants.kDifferentialDriveLeft);
     //rightMotor = new TalonSRX(13);  //Constants.kDifferentialDriveRight);
 
-    leftMotorV1 = new VictorSPX(DriveConstants.kLeftMotor1Port);
-    leftMotorV2 = new VictorSPX(DriveConstants.kLeftMotor2Port);
-    rightMotorV1 = new VictorSPX(DriveConstants.kRightMotor1Port);
-    rightMotorV2 = new VictorSPX(DriveConstants.kRightMotor2Port);
+    try {
+      mLeftMotorV1 = new VictorSPX(DriveConstants.kLeftMotor1Port);
+      mLeftMotorV2 = new VictorSPX(DriveConstants.kLeftMotor2Port);
+      mRightMotorV1 = new VictorSPX(DriveConstants.kRightMotor1Port);
+      mRightMotorV2 = new VictorSPX(DriveConstants.kRightMotor2Port);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Drive Motor Controllers:  " + ex.getMessage(), true);
+    }
+    
 
     mLeftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
     mRightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+
+
+
+
      
-    leftMotorV1.setNeutralMode(NeutralMode.Brake);
-    leftMotorV2.setNeutralMode(NeutralMode.Brake);
-    rightMotorV1.setNeutralMode(NeutralMode.Brake);
-    rightMotorV2.setNeutralMode(NeutralMode.Brake);
+    mLeftMotorV1.setNeutralMode(NeutralMode.Brake);
+    mLeftMotorV2.setNeutralMode(NeutralMode.Brake);
+    mRightMotorV1.setNeutralMode(NeutralMode.Brake);
+    mRightMotorV2.setNeutralMode(NeutralMode.Brake);
 
 
   }
 
   public void SetLeftDriveSpeed(double speed) {
     //leftMotor.set(ControlMode.PercentOutput, speed);
-    leftMotorV1.set(ControlMode.PercentOutput, speed);
-    leftMotorV2.set(ControlMode.PercentOutput, speed);
+    mLeftMotorV1.set(ControlMode.PercentOutput, speed);
+    mLeftMotorV2.set(ControlMode.PercentOutput, speed);
 
     //LEDPort1.setSpeed(speed);
 
@@ -69,8 +79,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void SetRightDriveSpeed(double speed) {
     //rightMotor.set(ControlMode.PercentOutput, speed);
-    rightMotorV1.set(ControlMode.PercentOutput, -speed);
-    rightMotorV2.set(ControlMode.PercentOutput, -speed);
+    mRightMotorV1.set(ControlMode.PercentOutput, -speed);
+    mRightMotorV2.set(ControlMode.PercentOutput, -speed);
 
   }
 
