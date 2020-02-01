@@ -8,8 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import javax.lang.model.util.ElementScanner6;
+
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
+
 
 public class LEDSubSystem extends SubsystemBase {
 
@@ -22,9 +25,27 @@ public class LEDSubSystem extends SubsystemBase {
   }
 
   public void SetLEDMode(double speed) {
-    //rightMotor.set(ControlMode.PercentOutput, speed);
-    //LEDPort2.setAngle(30);
-     ledController.setSpeed(speed);
+    //below logic tree allows robot to pull values from right motor
+    //the led the correlated the motor output to a single color value for forward, reverse, and zero
+
+    if(speed >= .01)
+    {
+      ledController.setSpeed(0.87);
+    //sets "forward" color
+    } 
+    if(speed <= -.01)
+    {
+      ledController.setSpeed(0.61);
+    //sets "reverse" color
+    }
+    if(speed < .01 && speed > -.01)
+    {
+      ledController.setSpeed(0.99);
+    //sets "standby" color after the "x" button is pressed
+    }
+    
+     
+     
     
   }
 

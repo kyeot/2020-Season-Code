@@ -28,14 +28,14 @@ public class LEDCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mLedSubSystem.SetLEDMode(0.5);
+    mLedSubSystem.SetLEDMode(-0.87);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //mLedSubSystem.SetLEDMode(0.6);
-    mLedSubSystem.SetLEDMode(mDriveController.getY(Hand.kRight) * 0.21 + 0.78);
+    //allows for LED's to cycle all solid colors based on right motors current speed
+    mLedSubSystem.SetLEDMode(mDriveController.getY(Hand.kRight));
   }
 
   // Called once the command ends or is interrupted.
