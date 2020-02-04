@@ -74,14 +74,14 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController));
+        .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
 
         
-       // new JoystickButton(mDriverController, Button.kA.value)
-       // .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
+        new JoystickButton(mDriverController, Button.kA.value)
+        .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
 
-       new JoystickButton(mDriverController, Button.kA.value)
-       .whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem) .withTimeout(5));
+       //new JoystickButton(mDriverController, Button.kA.value)
+       //.whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem) .withTimeout(5));
 
         new JoystickButton(mDriverController, Button.kB.value)
         .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubSystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends CommandBase {
 
@@ -29,7 +30,8 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void execute() {
 
-    mShooterSubSystem.SetShooterSpeed(0.3);
+    mShooterSubSystem.SetShooterSpeed(0.6);
+    SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity()  );
 
   }
 

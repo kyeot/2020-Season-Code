@@ -43,6 +43,10 @@ public class ShooterSubSystem extends SubsystemBase {
     mShooterMotor.set(speed);   
   }
 
+  public double GetVelocity() {
+    return mShooterMotor.getEncoder().getVelocity();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
