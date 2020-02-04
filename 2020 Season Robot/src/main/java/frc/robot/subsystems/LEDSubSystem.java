@@ -28,6 +28,9 @@ public class LEDSubSystem extends SubsystemBase {
     //below logic tree allows robot to pull values from right motor
     //the led the correlated the motor output to a single color value for forward, reverse, and zero
 
+    ledController.setSpeed(speed);
+
+    /*
     if(speed >= .01)
     {
       ledController.setSpeed(0.87);
@@ -43,7 +46,7 @@ public class LEDSubSystem extends SubsystemBase {
       ledController.setSpeed(0.99);
     //sets "standby" color after the "x" button is pressed
     }
-    
+    */
      
      
     

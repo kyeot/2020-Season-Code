@@ -77,11 +77,11 @@ public class RobotContainer {
         .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
 
         
-        new JoystickButton(mDriverController, Button.kA.value)
-        .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
+        //new JoystickButton(mDriverController, Button.kA.value)
+        //.whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
 
-       //new JoystickButton(mDriverController, Button.kA.value)
-       //.whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem) .withTimeout(5));
+       new JoystickButton(mDriverController, Button.kA.value)
+       .whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem) .withTimeout(15));
 
         new JoystickButton(mDriverController, Button.kB.value)
         .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));

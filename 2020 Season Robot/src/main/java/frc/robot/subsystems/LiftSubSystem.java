@@ -12,13 +12,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Counter;
 
 public class LiftSubSystem extends SubsystemBase {
 
   VictorSPX mLiftMotor;
+  DigitalInput limitSwitch = new DigitalInput(4);
+  Counter counter = new Counter(limitSwitch);
 
   public LiftSubSystem() {
 
+    
 
     try {
       mLiftMotor = new VictorSPX(Constants.kLiftMotorPort);
@@ -30,6 +35,15 @@ public class LiftSubSystem extends SubsystemBase {
 
   public void RaiseLift() {
     mLiftMotor.set(ControlMode.PercentOutput, Constants.kLiftMotorSpeed );
+  }
+
+  public boolean isSwitchSet() {
+    return counter.get() > 0;
+  }
+
+  public void ResetSwitch()
+  {
+    counter.reset();
   }
 
   @Override

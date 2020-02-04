@@ -9,7 +9,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubSystem;
-import frc.robot.subsystems.LiftSubSystem;;
+import frc.robot.subsystems.LiftSubSystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class ExtendLiftCommand extends CommandBase {
 
@@ -26,16 +28,23 @@ public class ExtendLiftCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mLiftSubSystem.ResetSwitch();
+    mLedSubSystem.SetLEDMode(0.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putString("Limit Switch","" + mLiftSubSystem.isSwitchSet() );
+    if (mLiftSubSystem.isSwitchSet() == true) {
+      mLedSubSystem.SetLEDMode(0.7);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //mLedSubSystem.SetLEDMode(0);
   }
 
   // Returns true when the command should end.
