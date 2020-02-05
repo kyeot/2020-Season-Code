@@ -33,4 +33,11 @@ public class Constants {
       public static final double kGyroMaxAge = 0.6;   
       public static final double kRobotFront = 180;
 
+      public static final int kImageWidth = 160;
+      public static final int kImageHeight = 120;
+
+      public static final int kDriveController = 0;
+
+      public static final double robotToCameraAngle = 0;
+
 }

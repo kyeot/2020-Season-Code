@@ -10,8 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.VisionCommand;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -26,11 +28,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ColorWheelSystem m_colorWheelSubsystem = new ColorWheelSystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
 
-  private final DriveCommand m_autoCommand = new DriveCommand(m_driveSubsystem,m_colorWheelSubsystem);
+  private final DriveCommand m_autoCommand = new DriveCommand(m_driveSubsystem, m_colorWheelSubsystem, m_visionSubsystem);
+  private final VisionCommand m_visionCommand = new VisionCommand(m_visionSubsystem);
 
-
+  private final XboxController mDriverController = new XboxController(Constants.kDriveController);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -41,8 +45,9 @@ public class RobotContainer {
 
 
 
-
-    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem,m_colorWheelSubsystem));
+    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem, m_colorWheelSubsystem, m_visionSubsystem));
+    //m_visionSubsystem.setDefaultCommand(new VisionCommand(m_visionSubsystem));
+    //m_visionSubsystem.setDefaultCommand(m_visionCommand);
 
 
   }

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,10 +19,11 @@ import frc.robot.util.NavSensor;
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveCommand extends CommandBase {
+public class  DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_subsystem;
   private final ColorWheelSystem m_ColorWheelSystem;
+  private final VisionSubsystem m_visionSubsystem;
   private final XboxController m_driverController = new XboxController(0);
   //NavSensor gyro = NavSensor.getInstance();
   private final NavSensor m_gyro = NavSensor.getInstance();
@@ -31,12 +33,23 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem subsystem, ColorWheelSystem colorwheelsystem) {
+  public DriveCommand(DriveSubsystem subsystem, ColorWheelSystem colorwheelsystem, VisionSubsystem visionSystem) {
     m_subsystem = subsystem;
     m_ColorWheelSystem = colorwheelsystem;
+    m_visionSubsystem = visionSystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     addRequirements(colorwheelsystem);
+    addRequirements(visionSystem);
+  }
+
+  public DriveCommand(ColorWheelSystem colorwheelsystem, VisionSubsystem visionSystem) {
+    m_ColorWheelSystem = colorwheelsystem;
+    m_visionSubsystem = visionSystem;
+    m_subsystem  = null;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(colorwheelsystem);
+    addRequirements(visionSystem);
   }
 
   // Called when the command is initially scheduled.
@@ -48,27 +61,27 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
 
-    double speedLeft = m_driverController.getY(Hand.kLeft );
+    double speedLeft = m_driverController.getY(Hand.kLeft);
     double speedRight= m_driverController.getY(Hand.kRight);
 
-    SmartDashboard.putString("left","" + speedLeft );
-    SmartDashboard.putString("right","" + speedRight );
+    SmartDashboard.putString("left","" + speedLeft);
+    SmartDashboard.putString("right","" + speedRight);
     SmartDashboard.putString("l Distance","" + m_subsystem.getAverageEncoderDistance() );
     SmartDashboard.putString("Nav X angle","" + m_gyro.getRawAngle());
 
 
-    m_subsystem.SetLeftDriveSpeed(speedLeft);
-    m_subsystem.SetRightDriveSpeed(speedRight);
+    //m_subsystem.SetLeftDriveSpeed(speedLeft);
+    //m_subsystem.SetRightDriveSpeed(speedRight);
 
-
-    //m_ColorWheelSystem.ReadColorSensor();
-
-
+    SmartDashboard.putString("DB/String 1", "Target Angle: " + m_visionSubsystem.getCenterX());
+    SmartDashboard.putString("DB/String 2", "TL: " + m_visionSubsystem.getBoundingRect().tl());
+    SmartDashboard.putString("DB/String 3", "BR: " + m_visionSubsystem.getBoundingRect().br());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.

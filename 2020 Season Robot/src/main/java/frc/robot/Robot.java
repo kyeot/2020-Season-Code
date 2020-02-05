@@ -7,9 +7,19 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.util.GripPipeline;
 
 
 /**
@@ -24,6 +34,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private VisionThread visionThread;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -34,6 +46,29 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    //clears strings on dashboard
+    for (int i = 0; i < 10; i++) {
+      SmartDashboard.putString("DB/String " + i, "");
+      System.out.println("Clreaing string " + i);
+    }
+    // new Thread(() -> {
+    //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    //   camera.setResolution(640, 480);
+
+    //   CvSink cvSink = CameraServer.getInstance().getVideo();
+    //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+
+    //   Mat source = new Mat();
+    //   Mat output = new Mat();
+
+    //   while(!Thread.interrupted()) {
+    //     if (cvSink.grabFrame(source) == 0) {
+    //       continue;
+    //     }
+    //     Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+    //     outputStream.putFrame(output);
+    //   }
+    // }).start();
   }
 
   /**
