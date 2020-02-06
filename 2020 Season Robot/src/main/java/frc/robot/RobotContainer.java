@@ -49,7 +49,7 @@ public class RobotContainer {
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
 
-  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem,mDriverController);
+  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController);
 
 
   /**
@@ -59,7 +59,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    mDriveSubsystem.setDefaultCommand(new DriveCommand(mDriveSubsystem,mDriverController));
+    mDriveSubsystem.setDefaultCommand(mDriveCommand);
 
 
   }
@@ -71,6 +71,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(mDriverController, Button.kX.value)
@@ -125,6 +126,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return  m_autoCommand;
+    return  mDriveCommand;
   }
 }
