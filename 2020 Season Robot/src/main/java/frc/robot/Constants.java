@@ -23,6 +23,12 @@ public class Constants {
     public static final int kLiftMotorPort = 3;
     public static final double kLiftMotorSpeed = 0.5;
 
+    public static final int kImageWidth = 160;
+    public static final int kImageHeight = 120;
+
+
+    public static final double robotToCameraAngle = 0;
+
     public static final class DriveConstants {
         public static final int kLeftMotor1Port = 11;
         public static final int kLeftMotor2Port = 12;

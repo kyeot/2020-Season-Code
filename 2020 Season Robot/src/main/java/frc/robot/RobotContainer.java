@@ -13,6 +13,7 @@ import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.VisionCommand;
 import frc.robot.commands.TurnRight90;
 import frc.robot.commands.TurnLeft90;
 import frc.robot.commands.ExtendLiftCommand;
@@ -22,6 +23,7 @@ import frc.robot.subsystems.ShooterSubSystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubSystem;
 import frc.robot.subsystems.LEDSubSystem;
+import frc.robot.subsystems.VisionSubSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -44,6 +46,7 @@ public class RobotContainer {
   private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
   private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
+  private final VisionSubSystem mVisionSubsystem = new VisionSubSystem();
 
 
 
@@ -72,10 +75,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    new JoystickButton(mDriverController, Button.kX.value)
+    .whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
+
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-    new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
+    //new JoystickButton(mDriverController, Button.kX.value)
+    //    .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
 
         
         //new JoystickButton(mDriverController, Button.kA.value)
