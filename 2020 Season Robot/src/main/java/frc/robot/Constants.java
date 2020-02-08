@@ -30,9 +30,17 @@ public class Constants {
     public static final double robotToCameraAngle = 0;
 
     public static final class DriveConstants {
+       // competition settings
+       /*
         public static final int kLeftMotor1Port = 11;
         public static final int kLeftMotor2Port = 12;
         public static final int kRightMotor1Port = 14;
+        public static final int kRightMotor2Port = 15;
+        */
+
+        public static final int kLeftMotor1Port = 11;
+        public static final int kLeftMotor2Port = 12;
+        public static final int kRightMotor1Port = 13;
         public static final int kRightMotor2Port = 15;
     
         public static final int[] kLeftEncoderPorts = new int[]{0, 1};

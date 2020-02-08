@@ -207,8 +207,8 @@ public class DriveCommand extends CommandBase {
 	public void setSpeeds(double scale) {
     
 
-		leftSpeed = scale*scaleSide('l', averageWheelOutput(mDriverController.getRawAxis(2), mDriverController.getRawAxis(3)), mDriverController.getRawAxis(0));
-		rightSpeed = scale*scaleSide('r', averageWheelOutput(mDriverController.getRawAxis(2), mDriverController.getRawAxis(3)), mDriverController.getRawAxis(0));
+		leftSpeed = scale*scaleSide('l', averageWheelOutput(mDriverController.getRawAxis(3), mDriverController.getRawAxis(2)), mDriverController.getRawAxis(0));
+		rightSpeed = scale*scaleSide('r', averageWheelOutput(mDriverController.getRawAxis(3), mDriverController.getRawAxis(2)), mDriverController.getRawAxis(0));
 	}	
 	
 	public void checkStationaryRotation(double scale) {

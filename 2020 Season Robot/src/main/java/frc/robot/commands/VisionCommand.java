@@ -36,6 +36,9 @@ public class VisionCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    SmartDashboard.putString("test", "test");
+
     SmartDashboard.putString("DB/String 1", "Center X: " + visionSubsystem.getCenterX());
     SmartDashboard.putString("DB/String 2", "Top Left point: " + visionSubsystem.getBoundingRect().tl());
     SmartDashboard.putString("DB/String 3", "Bottom Right point: " + visionSubsystem.getBoundingRect().br());
