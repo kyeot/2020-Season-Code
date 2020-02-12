@@ -12,6 +12,25 @@ package frc.robot;
  */
 public class Constants {
 
+    public static final int kDriveController = 0;
+
+    public static final double kGyroMaxAge = 0.6;   
+    public static final double kRobotFront = 180;
+
+    public static final int kIntakeMotorPort = 2;
+    public static final double kIntakeMotorSpeed = 0.8;
+
+    public static final int kLiftMotorPort = 3;
+    public static final double kLiftMotorSpeed = 0.5;
+
+    public static final int kImageWidth = 160;
+    public static final int kImageHeight = 120;
+
+
+    public static final double robotToCameraAngle = 0;
+
+    public static final double kGoalTargetSize = 39.25; //inches
+
     public static final class DriveConstants {
         public static final int kLeftMotor1Port = 13;
         public static final int kLeftMotor2Port = 15;
@@ -28,16 +47,24 @@ public class Constants {
         public static final double kEncoderDistancePerPulse =
             // Assumes the encoders are directly mounted on the wheel shafts
             (kWheelDiameterInches * Math.PI) / (double) kEncoderCPR;
+
+
+        public static final boolean kGyroReversed = false;
+
+        public static final double kStabilizationP = 1;
+        public static final double kStabilizationI = 0.5;
+        public static final double kStabilizationD = 0;
+    
+        public static final double kTurnP = 1;
+        public static final double kTurnI = 0;
+        public static final double kTurnD = 0;
+    
+        public static final double kMaxTurnRateDegPerS = 100;
+        public static final double kMaxTurnAccelerationDegPerSSquared = 300;
+    
+        public static final double kTurnToleranceDeg = 5;
+        public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
+        
       }
-
-      public static final double kGyroMaxAge = 0.6;   
-      public static final double kRobotFront = 180;
-
-      public static final int kImageWidth = 160;
-      public static final int kImageHeight = 120;
-
-      public static final int kDriveController = 0;
-
-      public static final double robotToCameraAngle = 0;
 
 }

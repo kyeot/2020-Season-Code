@@ -13,6 +13,10 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.VisionCommand;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubSystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubSystem;
+import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -25,10 +29,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final ColorWheelSystem m_colorWheelSubsystem = new ColorWheelSystem();
-  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+
+  private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
+  private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
+  private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
+  private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
+  private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
+  private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
+  private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 
   private final DriveCommand m_autoCommand = new DriveCommand(m_driveSubsystem, m_colorWheelSubsystem, m_visionSubsystem);
@@ -60,8 +68,39 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    /*
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(mDriverController, Button.kX.value)
+    .whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem));
+
+    // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+    //new JoystickButton(mDriverController, Button.kX.value)
+    //    .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
+
+        
+        //new JoystickButton(mDriverController, Button.kA.value)
+        //.whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
+
+       new JoystickButton(mDriverController, Button.kA.value)
+       .whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem) .withTimeout(15));
+
+        new JoystickButton(mDriverController, Button.kB.value)
+        .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
+
+        new JoystickButton(mDriverController, Button.kY.value)
+        .whenPressed(
+
+          new SequentialCommandGroup(
+            new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
+            new TurnLeft90(mDriveSubsystem,90).withTimeout(8),
+            new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
+            new TurnLeft90(mDriveSubsystem,65).withTimeout(8),
+            new ShooterCommand(mShooterSubsystem).withTimeout(5)
+            )
+            
+        );
+
+
+         /*
+    new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(() -> m_robotArm.setGoal(2), m_robotArm);
 
     // Move the arm to neutral position when the 'B' button is pressed.
