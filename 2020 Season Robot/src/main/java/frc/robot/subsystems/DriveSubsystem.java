@@ -17,6 +17,7 @@ import frc.robot.Constants.DriveConstants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -32,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-
+  private final AnalogInput mUltrasonic = new AnalogInput(DriveConstants.kUltrasonicPort);
 
   private final Encoder mLeftEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
   private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
@@ -126,6 +127,11 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
+
+  public double GetSensorDistanceInInches() {
+    return mUltrasonic.getValue() * DriveConstants.kValueToInches;
+  }
+
 
   @Override
   public void periodic() {

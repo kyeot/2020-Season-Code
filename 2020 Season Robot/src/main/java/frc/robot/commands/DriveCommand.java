@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,14 +23,13 @@ public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem mDriveSubSystem;
   private final XboxController mDriverController; 
-  private boolean bReverseDrive = false;
 
   double leftSpeed;
-	double rightSpeed;
-	boolean lastButton1State = false;
+  double rightSpeed;
+  boolean lastButton1State = false;
   boolean reverseButton1Toggle = false;
   boolean biggerRight;
-	boolean goingForward;
+  boolean goingForward;
   
 
 
@@ -59,93 +59,68 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
 
+
+	double distanceToTarget = mDriveSubSystem.GetSensorDistanceInInches();
+
     double scale;
 		
-		if (mDriverController.getBumperPressed(Hand.kLeft)) {
-			//Quarter speed
-			scale = 0.25;
-		} 
+	if (mDriverController.getBumperPressed(Hand.kLeft)) {
+		//Quarter speed
+		scale = 0.25;
+	} 
+	
+	else if (mDriverController.getBumperPressed(Hand.kRight)) {
+		//Full speed
+		scale = 1;
+	}
+	
+	else {
+		//Default speed of .75
+		scale = 0.75;
+	}
+
+
+	setSpeeds(scale);
+	checkStationaryRotation(scale);
 		
-		else if (mDriverController.getBumperPressed(Hand.kRight)) {
-			//Full speed
-			scale = 1;
-		}
-		
-		else {
-			//Default speed of .75
-			scale = 0.75;
-		}
+	if (Math.abs(leftSpeed) < 0.15) {
+		leftSpeed = 0;
+	}
+
+	if (Math.abs(rightSpeed) < 0.15) {
+		rightSpeed = 0;
+	}
+
+	if(mDriverController.getRawButton(DriveConstants.kBackwardsDrive) == true && lastButton1State == false) {
+		reverseButton1Toggle = toggleInput(reverseButton1Toggle);
+		lastButton1State = true;
+	} else if (mDriverController.getRawButton(DriveConstants.kBackwardsDrive) == false) {
+		lastButton1State = false;
+	}
+	
+	//if(reverseButton1Toggle) {
+		mDriveSubSystem.SetLeftDriveSpeed(-leftSpeed);
+		mDriveSubSystem.SetRightDriveSpeed(-rightSpeed);
+	//}
+	//else{
+	//	mDriveSubSystem.SetLeftDriveSpeed(leftSpeed);
+	//	mDriveSubSystem.SetRightDriveSpeed(rightSpeed);
+	//}
 
 
-		setSpeeds(scale);
-		checkStationaryRotation(scale);
-			
-		if (Math.abs(leftSpeed) < 0.15) {
-			leftSpeed = 0;
-		}
-
-		if (Math.abs(rightSpeed) < 0.15) {
-			rightSpeed = 0;
-		}
-
-    //Backwards Driver Drive
-    /*
-		if(OI.driver.getRawButton(Constants.kBackwardsDrive) == true && lastButton1State == false) {
-			reverseButton1Toggle = toggleInput(reverseButton1Toggle);
-			lastButton1State = true;
-		} else if (OI.driver.getRawButton(Constants.kBackwardsDrive) == false) {
-			lastButton1State = false;
-    }
-    */
-
-    mDriveSubSystem.SetLeftDriveSpeed(-leftSpeed);
-    mDriveSubSystem.SetRightDriveSpeed(-rightSpeed);
-		
-		//if(reverseButton1Toggle) {
-		//	Robot.tankDrive.tankDrive(-rightSpeed, -leftSpeed);
-		//}
-		//else{
-		//	Robot.tankDrive.tankDrive(leftSpeed, rightSpeed);
-		//}
-
-
-    /*
-    double speedLeft = mDriverController.getY(Hand.kLeft ) * scale ;
-    double speedRight= mDriverController.getY(Hand.kRight)  * scale ;
-
-    //mDriverController.
-
-    //Button.kX.value
-
-
-    SmartDashboard.putString("left","" + speedLeft );
-    SmartDashboard.putString("right","" + speedRight );
+	
+	//SmartDashboard.putString("left","" + speedLeft );
+    SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
     SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
-    SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
-
-
-    if (!bReverseDrive)
-    {
-      mDriveSubSystem.SetLeftDriveSpeed(-speedLeft);
-      mDriveSubSystem.SetRightDriveSpeed(-speedRight);
-    }
-    else 
-    {
-      mDriveSubSystem.SetLeftDriveSpeed(speedLeft);
-      mDriveSubSystem.SetRightDriveSpeed(speedRight);
-    }
-
-    */
-  
-    //m_ColorWheelSystem.ReadColorSensor();
-
-
+	SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
+	SmartDashboard.putString("Distance to Target: ","" + distanceToTarget);
+		
   }
 
-  public void SetReverseDrive () {
-    bReverseDrive = !bReverseDrive;
-  }
+  public boolean toggleInput(boolean value) {
+	return value ? false : true;
+}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -216,9 +191,9 @@ public class DriveCommand extends CommandBase {
 			scale = .5;
 		}
 		if (/*Math.abs(OI.driver.getRawAxis(0)) > .25 &&*/ mDriverController.getRawAxis(3) < .15 && mDriverController.getRawAxis(2) < .15) {
-			leftSpeed = scale*mDriverController.getRawAxis(1);
-			rightSpeed = scale*mDriverController.getRawAxis(5);
-			if (Math.abs(mDriverController.getRawAxis(5)) < .25 && Math.abs(mDriverController.getRawAxis(1)) < .4 && Math.abs(mDriverController.getRawAxis(0)) > .25) {
+			leftSpeed = -scale*mDriverController.getRawAxis(5);
+			rightSpeed = -scale*mDriverController.getRawAxis(1);
+			if (Math.abs(mDriverController.getRawAxis(1)) < .25 && Math.abs(mDriverController.getRawAxis(5)) < .4 && Math.abs(mDriverController.getRawAxis(0)) > .25) {
 				leftSpeed = -scale*mDriverController.getRawAxis(0);
 				rightSpeed = scale*mDriverController.getRawAxis(0);
 			}

@@ -14,6 +14,8 @@ public class Constants {
 
     public static final int kDriveController = 0;
 
+
+
     public static final double kGyroMaxAge = 0.6;   
     public static final double kRobotFront = 180;
 
@@ -42,6 +44,9 @@ public class Constants {
         public static final int kLeftMotor2Port = 12;
         public static final int kRightMotor1Port = 13;
         public static final int kRightMotor2Port = 15;
+
+        public static final int kUltrasonicPort = 0;
+        public static double kValueToInches = 0.125;
     
         public static final int[] kLeftEncoderPorts = new int[]{0, 1};
         public static final int[] kRightEncoderPorts = new int[]{2, 3};
@@ -77,6 +82,8 @@ public class Constants {
     
         public static final double kTurnToleranceDeg = 5;
         public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
+
+        public static final int kBackwardsDrive = 1; 
       }
 
       public static final class ShooterConstants {
