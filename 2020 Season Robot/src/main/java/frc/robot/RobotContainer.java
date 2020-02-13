@@ -52,7 +52,7 @@ public class RobotContainer {
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
 
-  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController);
+  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController,mLEDSubsystem);
 
 
   /**
@@ -64,7 +64,7 @@ public class RobotContainer {
 
     mDriveSubsystem.setDefaultCommand(mDriveCommand);
 
-
+    mLEDSubsystem.SetRestingMode();
   }
 
   /**

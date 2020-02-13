@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,6 +24,7 @@ public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem mDriveSubSystem;
   private final XboxController mDriverController; 
+  private final LEDSubSystem mLEDSubsystem;
 
   double leftSpeed;
   double rightSpeed;
@@ -38,11 +40,13 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller) {
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,LEDSubSystem ledsubsystem) {
     mDriveSubSystem = drivesubsystem;
-    mDriverController = drivercontroller;
+	mDriverController = drivercontroller;
+	mLEDSubsystem = ledsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivesubsystem);
+	addRequirements(drivesubsystem);
+	addRequirements(ledsubsystem);
 
   }
 
@@ -107,6 +111,9 @@ public class DriveCommand extends CommandBase {
 	//	mDriveSubSystem.SetRightDriveSpeed(rightSpeed);
 	//}
 
+	if (leftSpeed >0 && leftSpeed < 0.3) {
+		mLEDSubsystem.SetDrivingSlowMode();
+	}
 
 	
 	//SmartDashboard.putString("left","" + speedLeft );
