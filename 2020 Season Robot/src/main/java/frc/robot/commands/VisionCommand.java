@@ -20,7 +20,7 @@ public class VisionCommand extends CommandBase {
   private VisionSubsystem visionSubsystem;
   private DriveSubsystem driveSubsystem;
 
-  public VisionCommand(VisionSubsystem vs,DriveSubsystem ds) {
+  public VisionCommand(VisionSubsystem vs, DriveSubsystem ds) {
     // Use addRequirements() here to declare subsystem dependencies.
     visionSubsystem = vs;
     driveSubsystem = ds;

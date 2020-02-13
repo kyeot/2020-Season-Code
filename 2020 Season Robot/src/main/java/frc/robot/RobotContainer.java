@@ -49,12 +49,10 @@ public class RobotContainer {
   private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
   private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
-
-  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem, mColorWheelSubsystem, mVisionSubsystem);
-  private final VisionCommand m_visionCommand = new VisionCommand(mVisionSubsystem);
-
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
-
+  
+  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem, mDriverController);
+  private final VisionCommand m_visionCommand = new VisionCommand(mVisionSubsystem, mDriveSubsystem);
   private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController);
 
 
