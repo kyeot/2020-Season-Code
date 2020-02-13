@@ -9,8 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.VisionCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.LEDCommand;
+import frc.robot.commands.VisionCommand;
+import frc.robot.commands.TurnRight90;
+import frc.robot.commands.TurnLeft90;
+import frc.robot.commands.ExtendLiftCommand;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
@@ -19,6 +26,10 @@ import frc.robot.subsystems.LiftSubSystem;
 import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import static edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.Constants;
 
 
 
@@ -39,10 +50,13 @@ public class RobotContainer {
   private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 
-  private final DriveCommand m_autoCommand = new DriveCommand(m_driveSubsystem, m_colorWheelSubsystem, m_visionSubsystem);
-  private final VisionCommand m_visionCommand = new VisionCommand(m_visionSubsystem);
+  private final DriveCommand m_autoCommand = new DriveCommand(mDriveSubsystem, mColorWheelSubsystem, mVisionSubsystem);
+  private final VisionCommand m_visionCommand = new VisionCommand(mVisionSubsystem);
 
   private final XboxController mDriverController = new XboxController(Constants.kDriveController);
+
+  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController);
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -51,11 +65,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-
-
-    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem, m_colorWheelSubsystem, m_visionSubsystem));
-    //m_visionSubsystem.setDefaultCommand(new VisionCommand(m_visionSubsystem));
-    //m_visionSubsystem.setDefaultCommand(m_visionCommand);
+    mDriveSubsystem.setDefaultCommand(mDriveCommand);
 
 
   }
@@ -69,7 +79,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(mDriverController, Button.kX.value)
-    .whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem));
+    .whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
+
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     //new JoystickButton(mDriverController, Button.kX.value)
@@ -103,6 +114,7 @@ public class RobotContainer {
     new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(() -> m_robotArm.setGoal(2), m_robotArm);
 
+       
     // Move the arm to neutral position when the 'B' button is pressed.
     new JoystickButton(m_driverController, Button.kB.value)
         .whenPressed(() -> m_robotArm.setGoal(Constants.ArmConstants.kArmOffsetRads), m_robotArm);
@@ -123,6 +135,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return  m_autoCommand;
+    return  mDriveCommand;
   }
 }

@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import frc.robot.Constants;
-import frc.robot.util.GripPipeline;
 import frc.robot.util.GripPipelineBlue;
 
 public class VisionSubsystem extends SubsystemBase {
@@ -68,9 +67,9 @@ public class VisionSubsystem extends SubsystemBase {
     cvSink.setEnabled(true);
     cvSink.setSource(camera);
 
-    // outputStream = CameraServer.getInstance().putVideo("BoundingRectTest", 320, 240);
-    // server = new MjpegServer("OutputServer", 2783);
-    // server.setSource(outputStream);
+    outputStream = CameraServer.getInstance().putVideo("BoundingRectTest", 320, 240);
+    server = new MjpegServer("OutputServer", 2783);
+    server.setSource(outputStream);
 
     //pipeline = new GripPipelineIV();
     startThreads();

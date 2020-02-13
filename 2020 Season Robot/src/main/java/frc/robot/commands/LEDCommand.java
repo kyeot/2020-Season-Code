@@ -7,49 +7,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.LEDSubSystem;
 
-public class VisionCommand extends CommandBase {
-  /**
-   * Creates a new VisionCommand.
-   */
+public class LEDCommand extends CommandBase {
 
-  private VisionSubsystem visionSubsystem;
-  private DriveSubsystem driveSubsystem;
+  LEDSubSystem mLedSubSystem ;
+  XboxController mDriveController;
 
-  public VisionCommand(VisionSubsystem vs,DriveSubsystem ds) {
+
+  public LEDCommand(LEDSubSystem ledsubsystem, XboxController drivercontroller) {
+    mLedSubSystem = ledsubsystem;
+    mDriveController = drivercontroller;
+    addRequirements(ledsubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-    visionSubsystem = vs;
-    driveSubsystem = ds;
-    addRequirements(vs);
-    addRequirements(ds);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mLedSubSystem.SetLEDMode(-0.87);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    SmartDashboard.putString("DB/String 1", "Target Angle: " + visionSubsystem.getRawAngle());
-    SmartDashboard.putString("DB/String 2", "Center X: " + visionSubsystem.getCenterX());
-    SmartDashboard.putString("DB/String 3", "TL: " + visionSubsystem.getBoundingRect().tl());
-    SmartDashboard.putString("DB/String 4", "BR: " + visionSubsystem.getBoundingRect().br());
-    SmartDashboard.putString("DB/String 5", "Distance (in): " + visionSubsystem.getDistance());
-
-
-    //driveSubsystem.  here is the fun part
+    //allows for LED's to cycle all solid colors based on right motors current speed
+    mLedSubSystem.SetLEDMode(mDriveController.getY(Hand.kRight));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mLedSubSystem.SetLEDMode(0);
   }
 
   // Returns true when the command should end.

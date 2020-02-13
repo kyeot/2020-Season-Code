@@ -14,7 +14,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants.DriveConstants;
-
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -22,20 +26,17 @@ public class DriveSubsystem extends SubsystemBase {
 	TalonSRX leftMotor;
   TalonSRX rightMotor;
 
-  VictorSPX leftMotorV1;
-  VictorSPX rightMotorV1;
-  VictorSPX leftMotorV2;
-  VictorSPX rightMotorV2;
+  VictorSPX mLeftMotorV1;
+  VictorSPX mRightMotorV1;
+  VictorSPX mLeftMotorV2;
+  VictorSPX mRightMotorV2;
 
 
+  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+  private final AnalogInput mUltrasonic = new AnalogInput(DriveConstants.kUltrasonicPort);
 
-  private final Encoder m_leftEncoder = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);
-
-// The right-side drive encoder
-//private final Encoder m_rightEncoder =
-  //new Encoder(DriveConstants.kRightEncoderPorts[0], DriveConstants.kRightEncoderPorts[1],
-    //          DriveConstants.kRightEncoderReversed);
-
+  private final Encoder mLeftEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
+  private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
 
 
   public DriveSubsystem() {
@@ -43,36 +44,94 @@ public class DriveSubsystem extends SubsystemBase {
 		//leftMotor = new TalonSRX(11); //Constants.kDifferentialDriveLeft);
     //rightMotor = new TalonSRX(13);  //Constants.kDifferentialDriveRight);
 
-    leftMotorV1 = new VictorSPX(DriveConstants.kLeftMotor1Port);
-    leftMotorV2 = new VictorSPX(DriveConstants.kLeftMotor2Port);
-    rightMotorV1 = new VictorSPX(DriveConstants.kRightMotor1Port);
-    rightMotorV2 = new VictorSPX(DriveConstants.kRightMotor2Port);
+    try {
+      mLeftMotorV1 = new VictorSPX(DriveConstants.kLeftMotor1Port);
+      mLeftMotorV2 = new VictorSPX(DriveConstants.kLeftMotor2Port);
+      mRightMotorV1 = new VictorSPX(DriveConstants.kRightMotor1Port);
+      mRightMotorV2 = new VictorSPX(DriveConstants.kRightMotor2Port);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Drive Motor Controllers:  " + ex.getMessage(), true);
+    }
+    
 
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    //m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    mLeftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    mRightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+
+
+
+
      
-    leftMotorV1.setNeutralMode(NeutralMode.Brake);
-    leftMotorV2.setNeutralMode(NeutralMode.Brake);
-    rightMotorV1.setNeutralMode(NeutralMode.Brake);
-    rightMotorV2.setNeutralMode(NeutralMode.Brake);
+    mLeftMotorV1.setNeutralMode(NeutralMode.Brake);
+    mLeftMotorV2.setNeutralMode(NeutralMode.Brake);
+    mRightMotorV1.setNeutralMode(NeutralMode.Brake);
+    mRightMotorV2.setNeutralMode(NeutralMode.Brake);
+
 
   }
 
   public void SetLeftDriveSpeed(double speed) {
     //leftMotor.set(ControlMode.PercentOutput, speed);
-    leftMotorV1.set(ControlMode.PercentOutput, -speed);
-    leftMotorV2.set(ControlMode.PercentOutput, -speed);
+    mLeftMotorV1.set(ControlMode.PercentOutput, speed);
+    mLeftMotorV2.set(ControlMode.PercentOutput, speed);
+
+    //LEDPort1.setSpeed(speed);
+
   }
 
   public void SetRightDriveSpeed(double speed) {
     //rightMotor.set(ControlMode.PercentOutput, speed);
-    rightMotorV1.set(ControlMode.PercentOutput, speed);
-    rightMotorV2.set(ControlMode.PercentOutput, speed);
+    mRightMotorV1.set(ControlMode.PercentOutput, -speed);
+    mRightMotorV2.set(ControlMode.PercentOutput, -speed);
+
+  }
+
+  public void resetEncoders() {
+    mLeftEncoder.reset();
+    mRightEncoder.reset();
   }
 
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance()); // + m_rightEncoder.getDistance()) / 2.0;
+    return ((mLeftEncoder.getDistance()  + mRightEncoder.getDistance()) / 2.0);
   }
+
+  public double getLeftEncoderDistance() {
+    return (mLeftEncoder.getDistance());
+  }
+
+  public double getRightEncoderDistance() {
+    return ( mRightEncoder.getDistance());
+  }
+
+    /**
+   * Zeroes the heading of the robot.
+   */
+  public void zeroHeading() {
+    gyro.reset();
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from 180 to 180
+   */
+  public double getHeading() {
+    SmartDashboard.putString("Yaw: ","" + gyro.getYaw()  );
+    return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public double GetSensorDistanceInInches() {
+    return mUltrasonic.getValue() * DriveConstants.kValueToInches;
+  }
+
 
   @Override
   public void periodic() {

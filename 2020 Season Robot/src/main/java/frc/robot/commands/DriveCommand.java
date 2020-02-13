@@ -7,76 +7,121 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ColorWheelSystem;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.robot.util.NavSensor;
+import edu.wpi.first.wpilibj.XboxController.Button;
+
 
 /**
  * An example command that uses an example subsystem.
  */
 public class  DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveSubsystem m_subsystem;
-  private final ColorWheelSystem m_ColorWheelSystem;
-  private final VisionSubsystem m_visionSubsystem;
-  private final XboxController m_driverController = new XboxController(0);
-  //NavSensor gyro = NavSensor.getInstance();
-  private final NavSensor m_gyro = NavSensor.getInstance();
+  private final DriveSubsystem mDriveSubSystem;
+  private final XboxController mDriverController; 
+
+  double leftSpeed;
+  double rightSpeed;
+  boolean lastButton1State = false;
+  boolean reverseButton1Toggle = false;
+  boolean biggerRight;
+  boolean goingForward;
+  
+
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand(DriveSubsystem subsystem, ColorWheelSystem colorwheelsystem, VisionSubsystem visionSystem) {
-    m_subsystem = subsystem;
-    m_ColorWheelSystem = colorwheelsystem;
-    m_visionSubsystem = visionSystem;
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller) {
+    mDriveSubSystem = drivesubsystem;
+    mDriverController = drivercontroller;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-    addRequirements(colorwheelsystem);
-    addRequirements(visionSystem);
-  }
+    addRequirements(drivesubsystem);
 
-  public DriveCommand(ColorWheelSystem colorwheelsystem, VisionSubsystem visionSystem) {
-    m_ColorWheelSystem = colorwheelsystem;
-    m_visionSubsystem = visionSystem;
-    m_subsystem  = null;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(colorwheelsystem);
-    addRequirements(visionSystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    mDriveSubSystem.resetEncoders();
+    mDriveSubSystem.zeroHeading();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double speedLeft = m_driverController.getY(Hand.kLeft);
-    double speedRight= m_driverController.getY(Hand.kRight);
 
-    SmartDashboard.putString("left","" + speedLeft);
-    SmartDashboard.putString("right","" + speedRight);
-    SmartDashboard.putString("l Distance","" + m_subsystem.getAverageEncoderDistance() );
-    SmartDashboard.putString("Nav X angle","" + m_gyro.getRawAngle());
+	double distanceToTarget = mDriveSubSystem.GetSensorDistanceInInches();
+
+    double scale;
+		
+	if (mDriverController.getBumperPressed(Hand.kLeft)) {
+		//Quarter speed
+		scale = 0.25;
+	} 
+	
+	else if (mDriverController.getBumperPressed(Hand.kRight)) {
+		//Full speed
+		scale = 1;
+	}
+	
+	else {
+		//Default speed of .75
+		scale = 0.75;
+	}
 
 
-    //m_subsystem.SetLeftDriveSpeed(speedLeft);
-    //m_subsystem.SetRightDriveSpeed(speedRight);
+	setSpeeds(scale);
+	checkStationaryRotation(scale);
+		
+	if (Math.abs(leftSpeed) < 0.15) {
+		leftSpeed = 0;
+	}
 
-    SmartDashboard.putString("DB/String 1", "Target Angle: " + m_visionSubsystem.getCenterX());
-    SmartDashboard.putString("DB/String 2", "TL: " + m_visionSubsystem.getBoundingRect().tl());
-    SmartDashboard.putString("DB/String 3", "BR: " + m_visionSubsystem.getBoundingRect().br());
+	if (Math.abs(rightSpeed) < 0.15) {
+		rightSpeed = 0;
+	}
+
+	if(mDriverController.getRawButton(DriveConstants.kBackwardsDrive) == true && lastButton1State == false) {
+		reverseButton1Toggle = toggleInput(reverseButton1Toggle);
+		lastButton1State = true;
+	} else if (mDriverController.getRawButton(DriveConstants.kBackwardsDrive) == false) {
+		lastButton1State = false;
+	}
+	
+	//if(reverseButton1Toggle) {
+		mDriveSubSystem.SetLeftDriveSpeed(-leftSpeed);
+		mDriveSubSystem.SetRightDriveSpeed(-rightSpeed);
+	//}
+	//else{
+	//	mDriveSubSystem.SetLeftDriveSpeed(leftSpeed);
+	//	mDriveSubSystem.SetRightDriveSpeed(rightSpeed);
+	//}
+
+
+	
+	//SmartDashboard.putString("left","" + speedLeft );
+    SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
+    SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
+    SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
+	SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
+	SmartDashboard.putString("Distance to Target: ","" + distanceToTarget);
+		
   }
+
+  public boolean toggleInput(boolean value) {
+	return value ? false : true;
+}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -89,4 +134,71 @@ public class  DriveCommand extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
+  	// Called repeatedly when this Command is scheduled to run
+	public double averageWheelOutput(double lTrigger, double rTrigger) {
+		return -(rTrigger - lTrigger);
+	}
+	
+	public boolean isNegative(double value) {
+		return value < 0;
+	}
+	
+
+	
+	public double scaleSide(char side, double initialOutput, double angularValue) {
+		angularValue = -angularValue;
+		biggerRight = isNegative(angularValue);
+		goingForward = isNegative(initialOutput);
+		if (goingForward) {
+			if (biggerRight) {
+				if (side == 'l') {
+					return initialOutput;
+				} else {
+					return (initialOutput + initialOutput*angularValue);
+				}
+			} else {
+				if (side == 'l') {
+					return initialOutput - initialOutput*angularValue;
+				} else {
+					return initialOutput;
+				}
+			}
+		} else {
+			if (biggerRight) {
+				if (side == 'l') {
+					return initialOutput;
+				} else {
+					return (initialOutput - initialOutput*angularValue);
+				}
+			} else {
+				if (side == 'l') {
+					return initialOutput + initialOutput*angularValue;
+				} else {
+					return initialOutput;
+				}
+			}
+		}
+	}
+	
+	public void setSpeeds(double scale) {
+    
+
+		leftSpeed = scale*scaleSide('l', averageWheelOutput(mDriverController.getRawAxis(3), mDriverController.getRawAxis(2)), mDriverController.getRawAxis(0));
+		rightSpeed = scale*scaleSide('r', averageWheelOutput(mDriverController.getRawAxis(3), mDriverController.getRawAxis(2)), mDriverController.getRawAxis(0));
+	}	
+	
+	public void checkStationaryRotation(double scale) {
+		if (scale == .75) {
+			scale = .5;
+		}
+		if (/*Math.abs(OI.driver.getRawAxis(0)) > .25 &&*/ mDriverController.getRawAxis(3) < .15 && mDriverController.getRawAxis(2) < .15) {
+			leftSpeed = -scale*mDriverController.getRawAxis(5);
+			rightSpeed = -scale*mDriverController.getRawAxis(1);
+			if (Math.abs(mDriverController.getRawAxis(1)) < .25 && Math.abs(mDriverController.getRawAxis(5)) < .4 && Math.abs(mDriverController.getRawAxis(0)) > .25) {
+				leftSpeed = -scale*mDriverController.getRawAxis(0);
+				rightSpeed = scale*mDriverController.getRawAxis(0);
+			}
+		}
+	}
 }
