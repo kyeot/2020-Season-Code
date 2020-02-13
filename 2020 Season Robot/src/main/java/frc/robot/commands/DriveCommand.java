@@ -111,8 +111,22 @@ public class DriveCommand extends CommandBase {
 	//	mDriveSubSystem.SetRightDriveSpeed(rightSpeed);
 	//}
 
-	if (leftSpeed >0 && leftSpeed < 0.3) {
+	double averageSpeed = (Math.abs(leftSpeed) + Math.abs(rightSpeed)) /2;
+
+	if (averageSpeed == 0) {
+		mLEDSubsystem.SetRestingMode();
+	}
+
+	if (averageSpeed  >0 && averageSpeed < 0.3) {
 		mLEDSubsystem.SetDrivingSlowMode();
+	}
+
+	if (averageSpeed  >=0.3 && averageSpeed < 0.7) {
+		mLEDSubsystem.SetDrivingMediumMode();
+	}
+
+	if (averageSpeed  >=0.7 ) {
+		mLEDSubsystem.SetDrivingFastMode();
 	}
 
 	

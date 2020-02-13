@@ -30,13 +30,24 @@ public class LEDSubSystem extends SubsystemBase {
 
   public void SetRestingMode()
   {
-    ledController.setSpeed(0.03);
+    ledController.setSpeed(-0.35);
   }
 
   public void SetDrivingSlowMode()
   {
-    ledController.setSpeed(0.87);
+    ledController.setSpeed(-0.05);
   }
+
+  public void SetDrivingMediumMode()
+  {
+    ledController.setSpeed(-0.09);
+  }
+
+  public void SetDrivingFastMode()
+  {
+    ledController.setSpeed(-0.11);
+  }
+
 
   public void SetLEDMode(double speed) {
     //below logic tree allows robot to pull values from right motor
