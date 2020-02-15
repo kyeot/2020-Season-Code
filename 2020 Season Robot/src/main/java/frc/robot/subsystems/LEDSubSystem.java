@@ -48,6 +48,20 @@ public class LEDSubSystem extends SubsystemBase {
     ledController.setSpeed(-0.11);
   }
 
+  public void SetVisionActiveMode()
+  {
+    ledController.setSpeed(0.75);
+  }
+
+  public void SetShooterMotorChargingMode()
+  {
+    ledController.setSpeed(0.27);
+  }
+
+  public void SetShootingMode()
+  {
+    ledController.setSpeed(-0.59);
+  }
 
   public void SetLEDMode(double speed) {
     //below logic tree allows robot to pull values from right motor
