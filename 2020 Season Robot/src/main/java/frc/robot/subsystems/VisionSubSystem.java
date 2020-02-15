@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.opencv.core.Mat;
@@ -29,11 +30,10 @@ import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
-import frc.robot.util.GripPipeline;
-import frc.robot.util.GripPipelineThree;
+import frc.robot.Constants;
+import frc.robot.util.GripPipelineBlue;
 
-
-public class VisionSubSystem extends SubsystemBase {
+public class VisionSubsystem extends SubsystemBase {
   /**
    * Creates a new VisionSubSystem.
    */
@@ -58,7 +58,7 @@ public class VisionSubSystem extends SubsystemBase {
   private double currentFrameTime;
   private double prevFrameTime;
 
-  public VisionSubSystem() {
+  public VisionSubsystem() {
 
     camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -80,7 +80,7 @@ public class VisionSubSystem extends SubsystemBase {
   public void startThreads() {
 
     
-    visionThread = new VisionThread(camera, new GripPipelineThree(), pipeline -> {
+    visionThread = new VisionThread(camera, new GripPipelineBlue(), pipeline -> {
       //Mat image = new Mat();
       if (!pipeline.findContoursOutput().isEmpty()) {
         
@@ -88,16 +88,21 @@ public class VisionSubSystem extends SubsystemBase {
         //if (pipeline.findContoursOutput().size() == 1) {
           mop = pipeline.findContoursOutput().get(0);
           r = Imgproc.boundingRect(mop);
-          //TODO try thread without this line below
-          //Imgproc.rectangle(image, r.tl(), r.br(), new Scalar(255, 0, 255));
           synchronized (imgLock) {
             // centerX = 100; // r.x + (r.width / 2);
-            centerX = r.x + (r.width / 2) - (GripPipelineThree.PIPELINE_WIDTH / 2);
+            centerX = r.x + (r.width / 2);
           }
-        //} else {
-          //centerX = 0;
-        //}
+        
       }
+  
+      //DEBUG CODE
+      // if (pipeline.findContoursOutput().size() > 1) {
+      //   mop = pipeline.findContoursOutput().get(0);
+      //   r = Imgproc.boundingRect(mop);
+      //   centerX = r.x + (r.width / 2);
+      // } else {
+      //   centerX = 0;
+      // }
       
       //outputStream.putFrame(image);
       // if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -141,8 +146,23 @@ public class VisionSubSystem extends SubsystemBase {
     return centerX;
   }
 
-  public double getCameraToTarget() {
-    return centerX;
+
+  public double getRawAngle() {
+
+    return (getCenterX() - (GripPipelineBlue.PIPELINE_WIDTH / 2)) * (120.0 / GripPipelineBlue.PIPELINE_WIDTH);
+  }
+
+  DecimalFormat df = new DecimalFormat("#.##");
+  public String getDistance() {
+    double distance = (Constants.kGoalTargetSize * GripPipelineBlue.PIPELINE_WIDTH)/(2 * r.width * Math.tan(degreesToRadians(46.5)));
+    SmartDashboard.putString("DB/String 6", "Tan(Angle): " + df.format(Math.tan(degreesToRadians(46.5))));
+    SmartDashboard.putString("DB/String 7", "Width: " + df.format(r.width));
+    return df.format(distance);
+  }
+
+  public double degreesToRadians(double degrees) {
+    
+    return degrees * 0.017453292519943295;
   }
 
   // public double getRobotToTarget() {

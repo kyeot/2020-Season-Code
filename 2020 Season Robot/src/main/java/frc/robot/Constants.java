@@ -31,6 +31,8 @@ public class Constants {
 
     public static final double robotToCameraAngle = 0;
 
+    public static final double kGoalTargetSize = 39.25; //inches
+
     public static final class DriveConstants {
        // competition settings
        /*

@@ -23,7 +23,7 @@ import frc.robot.subsystems.ShooterSubSystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubSystem;
 import frc.robot.subsystems.LEDSubSystem;
-import frc.robot.subsystems.VisionSubSystem;
+import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -46,7 +46,7 @@ public class RobotContainer {
   private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
   private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
-  private final VisionSubSystem mVisionSubsystem = new VisionSubSystem();
+  private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 
 

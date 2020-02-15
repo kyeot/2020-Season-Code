@@ -10,17 +10,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.VisionSubSystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class VisionCommand extends CommandBase {
   /**
    * Creates a new VisionCommand.
    */
 
-  private VisionSubSystem visionSubsystem;
+  private VisionSubsystem visionSubsystem;
   private DriveSubsystem driveSubsystem;
 
-  public VisionCommand(VisionSubSystem vs,DriveSubsystem ds) {
+  public VisionCommand(VisionSubsystem vs, DriveSubsystem ds) {
     // Use addRequirements() here to declare subsystem dependencies.
     visionSubsystem = vs;
     driveSubsystem = ds;
@@ -37,11 +37,11 @@ public class VisionCommand extends CommandBase {
   @Override
   public void execute() {
 
-    SmartDashboard.putString("test", "test");
-
-    SmartDashboard.putString("DB/String 1", "Center X: " + visionSubsystem.getCenterX());
-    SmartDashboard.putString("DB/String 2", "Top Left point: " + visionSubsystem.getBoundingRect().tl());
-    SmartDashboard.putString("DB/String 3", "Bottom Right point: " + visionSubsystem.getBoundingRect().br());
+    SmartDashboard.putString("DB/String 1", "Target Angle: " + visionSubsystem.getRawAngle());
+    SmartDashboard.putString("DB/String 2", "Center X: " + visionSubsystem.getCenterX());
+    SmartDashboard.putString("DB/String 3", "TL: " + visionSubsystem.getBoundingRect().tl());
+    SmartDashboard.putString("DB/String 4", "BR: " + visionSubsystem.getBoundingRect().br());
+    SmartDashboard.putString("DB/String 5", "Distance (in): " + visionSubsystem.getDistance());
 
 
     //driveSubsystem.  here is the fun part
