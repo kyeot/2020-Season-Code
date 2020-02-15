@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class TurnRight90 extends CommandBase {
-
+public class TurnLeft extends CommandBase {
 
   private final DriveSubsystem mDriveSubsystem;
+  private int iDegrees = 0;
 
-  public TurnRight90(DriveSubsystem drive) {
-    
+  public TurnLeft(DriveSubsystem drive,int degrees) {
+
+    iDegrees = degrees;
+
     mDriveSubsystem = drive;
     addRequirements(drive);
 
@@ -33,8 +35,8 @@ public class TurnRight90 extends CommandBase {
   @Override
   public void execute() {
 
-    mDriveSubsystem.SetRightDriveSpeed(-0.2);
-    mDriveSubsystem.SetLeftDriveSpeed(0.2);
+    mDriveSubsystem.SetRightDriveSpeed(0.2);
+    mDriveSubsystem.SetLeftDriveSpeed(-0.2);
 
 
   }
@@ -47,7 +49,7 @@ public class TurnRight90 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mDriveSubsystem.getHeading() < 90){
+    if (mDriveSubsystem.getHeading() > -iDegrees){
       return false;
     }
     else {
@@ -56,5 +58,4 @@ public class TurnRight90 extends CommandBase {
       return true;
     }
     
-  }
-}
+  }}

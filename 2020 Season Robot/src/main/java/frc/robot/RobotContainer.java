@@ -14,8 +14,8 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.VisionCommand;
-import frc.robot.commands.TurnRight90;
-import frc.robot.commands.TurnLeft90;
+import frc.robot.commands.TurnRight;
+import frc.robot.commands.TurnLeft;
 import frc.robot.commands.ExtendLiftCommand;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -98,9 +98,9 @@ public class RobotContainer {
 
           new SequentialCommandGroup(
             new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
-            new TurnLeft90(mDriveSubsystem,90).withTimeout(8),
+            new TurnLeft(mDriveSubsystem,90).withTimeout(8),
             new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
-            new TurnLeft90(mDriveSubsystem,65).withTimeout(8),
+            new TurnLeft(mDriveSubsystem,65).withTimeout(8),
             new ShooterCommand(mShooterSubsystem).withTimeout(5)
             )
             
