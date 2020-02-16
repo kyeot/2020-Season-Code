@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -27,6 +28,7 @@ public class LiftSubSystem extends SubsystemBase {
 
     try {
       mLiftMotor = new VictorSPX(Constants.kLiftMotorPort);
+      mLiftMotor.setNeutralMode( NeutralMode.Brake );
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error Lift Motor Controller:  " + ex.getMessage(), true);
     }
@@ -34,7 +36,15 @@ public class LiftSubSystem extends SubsystemBase {
   }
 
   public void RaiseLift() {
+    mLiftMotor.set(ControlMode.PercentOutput, -Constants.kLiftMotorSpeed );
+  }
+
+  public void LowerLift() {
     mLiftMotor.set(ControlMode.PercentOutput, Constants.kLiftMotorSpeed );
+  }
+
+  public void StopLift() {
+    mLiftMotor.set(ControlMode.PercentOutput, 0 );
   }
 
   public boolean isSwitchSet() {

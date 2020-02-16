@@ -10,6 +10,7 @@ package frc.robot.commands;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubSystem;
+import frc.robot.subsystems.LiftSubSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
@@ -25,6 +26,7 @@ public class DriveCommand extends CommandBase {
   private final DriveSubsystem mDriveSubSystem;
   private final XboxController mDriverController; 
   private final LEDSubSystem mLEDSubsystem;
+  private final LiftSubSystem mLiftSubSystem;
 
   double leftSpeed;
   double rightSpeed;
@@ -40,13 +42,15 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,LEDSubSystem ledsubsystem) {
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,LEDSubSystem ledsubsystem,LiftSubSystem liftsubsystem) {
     mDriveSubSystem = drivesubsystem;
 	mDriverController = drivercontroller;
 	mLEDSubsystem = ledsubsystem;
+	mLiftSubSystem = liftsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
 	addRequirements(drivesubsystem);
 	addRequirements(ledsubsystem);
+	addRequirements(liftsubsystem);
 
   }
 
@@ -129,6 +133,14 @@ public class DriveCommand extends CommandBase {
 		mLEDSubsystem.SetDrivingFastMode();
 	}
 
+    // Manual Lift - Need to change controllers
+	if ( mDriverController.getPOV()  == 0 ) {
+        mLiftSubSystem.RaiseLift();
+    } else if (mDriverController.getPOV() == 180) {
+        mLiftSubSystem.LowerLift();
+    } else {
+        mLiftSubSystem.StopLift();
+    }
 	
 	//SmartDashboard.putString("left","" + speedLeft );
     SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
@@ -136,6 +148,7 @@ public class DriveCommand extends CommandBase {
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
 	SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
 	SmartDashboard.putString("Distance to Target: ","" + distanceToTarget);
+	SmartDashboard.putString("POV2: ","" + mDriverController.getPOV()) ;
 		
   }
 

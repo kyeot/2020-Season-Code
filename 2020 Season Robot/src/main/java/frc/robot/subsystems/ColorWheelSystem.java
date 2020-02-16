@@ -8,26 +8,31 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 
 public class ColorWheelSystem extends SubsystemBase {
 
   
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  VictorSPX mColorWheelMotor;
 
   /**
    * A Rev Color Sensor V3 object is constructed with an I2C port as a 
    * parameter. The device will be automatically initialized with default 
    * parameters.
    */
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  private final ColorSensorV3 m_colorSensor =new ColorSensorV3(i2cPort);
  
   /**
    * A Rev Color Match object is used to register and detect known colors. This can 
@@ -49,15 +54,38 @@ public class ColorWheelSystem extends SubsystemBase {
 
   public ColorWheelSystem() {
 
+
+    try {
+      mColorWheelMotor= new VictorSPX(Constants.kColorWheelMotorPort);
+      mColorWheelMotor.setNeutralMode(NeutralMode.Brake);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Color Motor Controller:  " + ex.getMessage(), true);
+    }
+
+
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);   
+    m_colorMatcher.addColorMatch(kYellowTarget);  
+
+
+
+
+
+ 
 
   }
 
+  public void TurnColorWheel() {
+    mColorWheelMotor.set(ControlMode.PercentOutput, Constants.kColorWheelMotorSpeed);
+  }
+
+  public void StopColorWheel() {
+    mColorWheelMotor.set(ControlMode.PercentOutput, 0);
+  }
+
   public void ReadColorSensor()
-{
+  {
       /**
      * The method GetColor() returns a normalized color value from the sensor and can be
      * useful if outputting the color to an RGB LED or similar. To
@@ -68,7 +96,7 @@ public class ColorWheelSystem extends SubsystemBase {
      * an object is the more light from the surroundings will bleed into the 
      * measurements and make it difficult to accurately determine its color.
      */
-    Color detectedColor = m_colorSensor.getColor();
+    Color detectedColor =  m_colorSensor.getColor();
 
     /**
      * Run the color match algorithm on our detected color
