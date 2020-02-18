@@ -16,6 +16,7 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.VisionCommand;
 import frc.robot.commands.TurnRight;
+import frc.robot.commands.UltrasonicApproachCommand;
 import frc.robot.commands.TurnLeft;
 import frc.robot.commands.ExtendLiftCommand;
 import frc.robot.subsystems.ColorWheelSystem;
@@ -47,7 +48,7 @@ public class RobotContainer {
   private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
   private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
-  //private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
+  private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 
 
@@ -88,11 +89,17 @@ public class RobotContainer {
        new JoystickButton(mDriverController, Button.kX.value)
         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(5));
         
+        new JoystickButton(mDriverController, Button.kA.value)
+        .whenPressed(new UltrasonicApproachCommand(mDriveSubsystem, mLEDSubsystem).withTimeout(5));
+
+        //new JoystickButton(mDriverController, Button.kA.value)
+        //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem).withTimeout(20));
+
         //new JoystickButton(mDriverController, Button.kA.value)
         //.whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(5));
 
-       new JoystickButton(mDriverController, Button.kA.value)
-       .whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem,mDriverController).withTimeout(15));
+       //new JoystickButton(mDriverController, Button.kA.value)
+       //.whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem,mDriverController).withTimeout(15));
 
         new JoystickButton(mDriverController, Button.kB.value)
         .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
