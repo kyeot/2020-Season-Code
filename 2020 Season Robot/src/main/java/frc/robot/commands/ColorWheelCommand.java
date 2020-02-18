@@ -17,6 +17,7 @@ public class ColorWheelCommand extends CommandBase {
   private final ColorWheelSystem mColorWheelSubSystem;
   private final LEDSubSystem mLedSubSystem;
 
+
   public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem) {
     mColorWheelSubSystem = colorwheelsystem;
     mLedSubSystem = ledsubsystem;
@@ -34,6 +35,23 @@ public class ColorWheelCommand extends CommandBase {
   public void execute() {
     SmartDashboard.putString("ColorWheel Command","Active"  );
     mColorWheelSubSystem.TurnColorWheel();
+
+  String Color = mColorWheelSubSystem.ReadColorSensor();
+ if(Color =="Blue"){
+   mLedSubSystem.SetBlueMode(); 
+  }
+  if(Color =="Red"){
+    mLedSubSystem.SetRedMode();
+  }
+  if(Color=="Green"){
+    mLedSubSystem.SetGreenMode();
+  }
+  if(Color=="Yellow"){
+    mLedSubSystem.SetYellowMode();
+  }
+
+
+
   }
 
   // Called once the command ends or is interrupted.

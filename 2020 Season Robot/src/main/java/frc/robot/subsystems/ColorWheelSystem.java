@@ -84,7 +84,8 @@ public class ColorWheelSystem extends SubsystemBase {
     mColorWheelMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void ReadColorSensor()
+  public String ReadColorSensor()
+
   {
       /**
      * The method GetColor() returns a normalized color value from the sensor and can be
@@ -115,7 +116,7 @@ public class ColorWheelSystem extends SubsystemBase {
     } else {
       colorString = "Unknown";
     }
-
+    
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
@@ -125,6 +126,9 @@ public class ColorWheelSystem extends SubsystemBase {
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
+
+
+    return colorString;
 }
 
 

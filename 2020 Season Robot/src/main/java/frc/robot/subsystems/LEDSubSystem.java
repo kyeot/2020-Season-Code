@@ -63,6 +63,23 @@ public class LEDSubSystem extends SubsystemBase {
     ledController.setSpeed(-0.59);
   }
 
+  public void SetRedMode()
+  {
+  ledController.setSpeed(0.61);
+}
+public void SetGreenMode()
+  {
+  ledController.setSpeed(0.77);
+}
+public void SetYellowMode()
+  {
+  ledController.setSpeed(0.69);
+}
+public void SetBlueMode()
+  {
+  ledController.setSpeed(0.87);
+}
+
   public void SetLEDMode(double speed) {
     //below logic tree allows robot to pull values from right motor
     //the led the correlated the motor output to a single color value for forward, reverse, and zero

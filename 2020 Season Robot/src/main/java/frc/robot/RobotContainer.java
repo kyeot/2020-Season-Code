@@ -87,7 +87,7 @@ public class RobotContainer {
 
 
        new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(5));
+        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(50));
         
         new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(new UltrasonicApproachCommand(mDriveSubsystem, mLEDSubsystem).withTimeout(5));
