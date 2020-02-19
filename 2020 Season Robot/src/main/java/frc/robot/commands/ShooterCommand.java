@@ -24,13 +24,16 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+   // mShooterSubSystem.StartFeederMotor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    mShooterSubSystem.SetShooterSpeed(0.6);
+    //mShooterSubSystem.SetShooterSpeed(0.6);
+    mShooterSubSystem.SetMotorRPM(3000);
+    //mShooterSubSystem.SetShooterSpeed(0.4);
     SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity()  );
 
   }
@@ -38,7 +41,9 @@ public class ShooterCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mShooterSubSystem.SetShooterSpeed(0);
+    SmartDashboard.putString("Shooter Comand End: ","True"  );
+    //mShooterSubSystem.SetShooterSpeed(0);
+   // mShooterSubSystem.StopFeederMotor();
   }
 
   // Returns true when the command should end.
