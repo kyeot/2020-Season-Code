@@ -16,6 +16,7 @@ public class ColorWheelCommand extends CommandBase {
 
   private final ColorWheelSystem mColorWheelSubSystem;
   private final LEDSubSystem mLedSubSystem;
+  private final String LastColor;
 
 
   public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem) {
@@ -49,7 +50,14 @@ public class ColorWheelCommand extends CommandBase {
   if(Color=="Yellow"){
     mLedSubSystem.SetYellowMode();
   }
+ 
+  if (LastColor != Color)
+  {
+    LastColor = Color;
 
+
+
+  }  
 
 
   }
