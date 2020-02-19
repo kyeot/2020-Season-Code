@@ -73,7 +73,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     //pipeline = new GripPipelineIV();
     startThreads();
-    SmartDashboard.putString("DB/String 0", "Here I am");
     SmartDashboard.putString("DB/String 0", visionThread.getState().toString());
   }
 
@@ -86,6 +85,7 @@ public class VisionSubsystem extends SubsystemBase {
         
         // loop through array and find left and right bounds
         //if (pipeline.findContoursOutput().size() == 1) {
+          //mop = pipeline.findContoursOutput().get(pipeline.findContoursOutput().size() - 1);
           mop = pipeline.findContoursOutput().get(0);
           r = Imgproc.boundingRect(mop);
           synchronized (imgLock) {
@@ -149,14 +149,13 @@ public class VisionSubsystem extends SubsystemBase {
 
   public double getRawAngle() {
 
-    return (getCenterX() - (GripPipelineBlue.PIPELINE_WIDTH / 2)) * (120.0 / GripPipelineBlue.PIPELINE_WIDTH);
+    return (getCenterX() - (GripPipelineBlue.PIPELINE_WIDTH / 2)) * (85.0 / GripPipelineBlue.PIPELINE_WIDTH);
   }
 
   DecimalFormat df = new DecimalFormat("#.##");
   public String getDistance() {
     double distance = (Constants.kGoalTargetSize * GripPipelineBlue.PIPELINE_WIDTH)/(2 * r.width * Math.tan(degreesToRadians(46.5)));
-    SmartDashboard.putString("DB/String 6", "Tan(Angle): " + df.format(Math.tan(degreesToRadians(46.5))));
-    SmartDashboard.putString("DB/String 7", "Width: " + df.format(r.width));
+    SmartDashboard.putString("DB/String 9", "Debug: " + df);
     return df.format(distance);
   }
 

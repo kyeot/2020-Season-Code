@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.text.DecimalFormat;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
@@ -31,18 +33,20 @@ public class VisionCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    driveSubsystem.zeroHeading();
   }
 
+  DecimalFormat df = new DecimalFormat("#.###");
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    SmartDashboard.putString("DB/String 1", "Target Angle: " + visionSubsystem.getRawAngle());
+    SmartDashboard.putString("DB/String 1", "Target Angle: " + df.format(visionSubsystem.getRawAngle()));
     SmartDashboard.putString("DB/String 2", "Center X: " + visionSubsystem.getCenterX());
     SmartDashboard.putString("DB/String 3", "TL: " + visionSubsystem.getBoundingRect().tl());
     SmartDashboard.putString("DB/String 4", "BR: " + visionSubsystem.getBoundingRect().br());
     SmartDashboard.putString("DB/String 5", "Distance (in): " + visionSubsystem.getDistance());
-
+    SmartDashboard.putString("DB/String 6", "Gyro: " + df.format(driveSubsystem.getHeading()));
 
     //driveSubsystem.  here is the fun part
   }

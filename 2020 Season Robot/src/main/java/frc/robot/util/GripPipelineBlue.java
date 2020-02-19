@@ -56,7 +56,7 @@ public class GripPipelineBlue implements VisionPipeline {
 		// double[] hsvThresholdHue = {56.6546762589928, 117.03071672354949};
 		// double[] hsvThresholdSaturation = {103.19244604316546, 255.0};
 		// double[] hsvThresholdValue = {229.31654676258998, 255.0};
-		double[] hsvThresholdHue = {66, 180};
+		double[] hsvThresholdHue = {81, 99};
 		double[] hsvThresholdSaturation = {143, 255.0};
 		double[] hsvThresholdValue = {232, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
