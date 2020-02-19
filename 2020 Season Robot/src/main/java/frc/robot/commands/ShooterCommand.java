@@ -31,7 +31,7 @@ public class ShooterCommand extends CommandBase {
   public void execute() {
 
     mShooterSubSystem.SetShooterSpeed(0.6);
-    SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity()  );
+    SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity());
 
   }
 
