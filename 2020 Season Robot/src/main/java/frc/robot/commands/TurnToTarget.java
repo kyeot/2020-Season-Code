@@ -9,18 +9,28 @@ package frc.robot.commands;
 
 import java.text.DecimalFormat;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class TurnToTarget extends CommandBase {
+
+  
+
   /**
    * Creates a new TurnToTarget.
    */
   private VisionSubsystem vs;
   private DriveSubsystem ds;
   private double initialDegrees;
+
+  //private PIDController positionPID;
+
+  private final double INITIAL_SPEED = 0.3;
+  private final double STOPPING_SPEED = 0.09;
+  private final int MAX_ITERATIONS = 1;
 
   public TurnToTarget(VisionSubsystem vs, DriveSubsystem ds) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -40,15 +50,35 @@ public class TurnToTarget extends CommandBase {
 
   
   DecimalFormat df = new DecimalFormat("#.###");
+  double currentHeading;
+  double currentProportion;
+  double speed;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (initialDegrees < 0) {
-      ds.SetRightDriveSpeed(0.15);
-      ds.SetLeftDriveSpeed(-0.15);
-    } else if (initialDegrees > 0) {
-      ds.SetRightDriveSpeed(-0.15);
-      ds.SetLeftDriveSpeed(0.15);
+    if (!startEnd()) {
+      currentHeading = ds.getHeading();
+      currentProportion = 1 - (currentHeading / initialDegrees);
+      speed = currentProportion * INITIAL_SPEED;
+
+
+      if (initialDegrees < 0) {
+        ds.SetRightDriveSpeed(speed);
+        ds.SetLeftDriveSpeed(-speed);
+      } else if (initialDegrees > 0) {
+        ds.SetRightDriveSpeed(-speed);
+        ds.SetLeftDriveSpeed(speed);
+      }
+    } else if (startEnd()) {
+      
+      if (initialDegrees < 0) {
+        ds.SetRightDriveSpeed(-STOPPING_SPEED);
+        ds.SetLeftDriveSpeed(STOPPING_SPEED);
+      } else if (initialDegrees > 0) {
+        ds.SetRightDriveSpeed(STOPPING_SPEED);
+        ds.SetLeftDriveSpeed(-STOPPING_SPEED);
+        count++;
+      }
     }
 
     SmartDashboard.putString("DB/String 1", "Target Angle: " + df.format(vs.getRawAngle()));
@@ -57,6 +87,9 @@ public class TurnToTarget extends CommandBase {
     SmartDashboard.putString("DB/String 4", "BR: " + vs.getBoundingRect().br());
     SmartDashboard.putString("DB/String 5", "Distance (in): " + vs.getDistance());
     SmartDashboard.putString("DB/String 6", "Gyro: " + df.format(ds.getHeading()));
+    SmartDashboard.putString("DB/String 7", "Initial Angle: " + df.format(initialDegrees));
+    SmartDashboard.putString("DB/String 8", "Speed: " + df.format(speed));
+
   }
 
   // Called once the command ends or is interrupted.
@@ -66,13 +99,10 @@ public class TurnToTarget extends CommandBase {
     ds.SetLeftDriveSpeed(0);
   }
 
-  // Returns true when the command should end.
-  int count = 0;
-  boolean finalIteration = false;
-  @Override
-  public boolean isFinished() {
+  public boolean startEnd() {
     if (initialDegrees < 0) {
       if (ds.getHeading() < initialDegrees) {
+        ds.SetLeftDriveSpeed(0);
         return true;
       } else {
         return false;
@@ -86,6 +116,18 @@ public class TurnToTarget extends CommandBase {
     } else {
       //If initialDegrees = 0
       return true;
+    }
+  }
+
+  // Returns true when the command should end.
+  int count = 0;
+  boolean finalIteration = false;
+  @Override
+  public boolean isFinished() {
+    if (count >= MAX_ITERATIONS) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
