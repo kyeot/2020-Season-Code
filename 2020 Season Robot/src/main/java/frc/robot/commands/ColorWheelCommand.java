@@ -16,7 +16,7 @@ public class ColorWheelCommand extends CommandBase {
 
   private final ColorWheelSystem mColorWheelSubSystem;
   private final LEDSubSystem mLedSubSystem;
-  private  String LastColor;
+  private final String LastColor;
 
 
   public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem) {
