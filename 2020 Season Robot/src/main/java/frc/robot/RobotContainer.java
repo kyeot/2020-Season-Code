@@ -16,6 +16,7 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.VisionCommand;
 import frc.robot.commands.TurnRight;
+import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.UltrasonicApproachCommand;
 import frc.robot.commands.TurnLeft;
 import frc.robot.commands.ExtendLiftCommand;
@@ -80,20 +81,20 @@ public class RobotContainer {
   //  new JoystickButton(mDriverController, Button.kX.value)
     //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
-
+    
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     //new JoystickButton(mDriverController, Button.kX.value)
     //    .whenPressed(new LEDCommand(mLEDSubsystem, mDriverController).withTimeout(5));
 
 
-       new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(50));
+      //  new JoystickButton(mDriverController, Button.kX.value)
+      //   .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(50));
         
         //new JoystickButton(mDriverController, Button.kA.value)
         //.whenPressed(new UltrasonicApproachCommand(mDriveSubsystem, mLEDSubsystem).withTimeout(5));
 
-        //new JoystickButton(mDriverController, Button.kA.value)
-        //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem).withTimeout(20));
+        new JoystickButton(mDriverController, Button.kX.value)
+        .whenPressed(new VisionCommand(mVisionSubsystem, mDriveSubsystem).withTimeout(20));
 
         new JoystickButton(mDriverController, Button.kA.value)
         .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(12));
@@ -101,20 +102,21 @@ public class RobotContainer {
        //new JoystickButton(mDriverController, Button.kA.value)
        //.whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem,mDriverController).withTimeout(15));
 
+        // new JoystickButton(mDriverController, Button.kB.value)
+        // .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
         new JoystickButton(mDriverController, Button.kB.value)
-        .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
+        .whenPressed(new TurnToTarget(mVisionSubsystem, mDriveSubsystem).withTimeout(8));
 
         new JoystickButton(mDriverController, Button.kY.value)
         .whenPressed(
 
-          new SequentialCommandGroup(
+        new SequentialCommandGroup(
             new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
             new TurnLeft(mDriveSubsystem,90).withTimeout(8),
             new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
             new TurnLeft(mDriveSubsystem,65).withTimeout(8),
             new ShooterCommand(mShooterSubsystem).withTimeout(5)
             )
-            
         );
 
 
