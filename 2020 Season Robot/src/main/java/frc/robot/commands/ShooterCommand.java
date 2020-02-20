@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterCommand extends CommandBase {
 
   ShooterSubSystem mShooterSubSystem;
+  private double dMaxRPM = 0;
+  private boolean bMaxReady = false;
+  private int iMaxCount = 0;
 
   public ShooterCommand(ShooterSubSystem shootersubsystem) {
     mShooterSubSystem = shootersubsystem;
@@ -25,16 +28,44 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void initialize() {
    // mShooterSubSystem.StartFeederMotor();
+   dMaxRPM =0;
+   iMaxCount = 0;
+   bMaxReady = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double dCurrentSpeed = mShooterSubSystem.GetVelocity();
 
-    //mShooterSubSystem.SetShooterSpeed(0.6);
-    mShooterSubSystem.SetMotorRPM(3000);
+    mShooterSubSystem.SetShooterSpeed(0.2);
+    //mShooterSubSystem.SetMotorRPM(3000);
     //mShooterSubSystem.SetShooterSpeed(0.4);
     SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity()  );
+
+    if (dMaxRPM < dCurrentSpeed)
+    {
+      dMaxRPM = dCurrentSpeed;
+    } else {
+
+      if ((dMaxRPM/dCurrentSpeed) < 1.05) {
+
+        iMaxCount++;
+        if (iMaxCount > 10) {
+          bMaxReady = true;
+        }
+      } else {
+        bMaxReady = false;
+        iMaxCount = 0;
+      }
+    }
+
+    if (bMaxReady == true) {
+      mShooterSubSystem.StartFeederMotor();
+    } else {
+      mShooterSubSystem.StopFeederMotor();
+    }
+
 
   }
 
@@ -42,8 +73,8 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SmartDashboard.putString("Shooter Comand End: ","True"  );
-    //mShooterSubSystem.SetShooterSpeed(0);
-   // mShooterSubSystem.StopFeederMotor();
+    mShooterSubSystem.SetShooterSpeed(0);
+    mShooterSubSystem.StopFeederMotor();
   }
 
   // Returns true when the command should end.
