@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.LEDSubSystem;
@@ -16,8 +17,11 @@ public class ColorWheelCommand extends CommandBase {
 
   private final ColorWheelSystem mColorWheelSubSystem;
   private final LEDSubSystem mLedSubSystem;
-  //private final String LastColor;
-
+  private  String LastColor;
+  private int bluecount;
+  private int redcount;
+  private int greencount;
+  private int yellowcount;
 
   public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem) {
     mColorWheelSubSystem = colorwheelsystem;
@@ -36,7 +40,7 @@ public class ColorWheelCommand extends CommandBase {
   public void execute() {
     SmartDashboard.putString("ColorWheel Command","Active"  );
     mColorWheelSubSystem.TurnColorWheel();
-
+    
   String Color = mColorWheelSubSystem.ReadColorSensor();
  if(Color =="Blue"){
    mLedSubSystem.SetBlueMode(); 
@@ -51,13 +55,27 @@ public class ColorWheelCommand extends CommandBase {
     mLedSubSystem.SetYellowMode();
   }
  
-  // if (LastColor != Color)
-  // {
-  //   LastColor = Color;
+  if (LastColor != Color)
+  {
+    if(LastColor =="Blue"){
+      bluecount=bluecount+1;
+     
+    }
+    if(LastColor =="Red"){
+      redcount=redcount+1;
+    }
+    if(LastColor =="Green"){
+      greencount=greencount+1;
+     
+    }
+    if(LastColor =="Yellow"){
+      yellowcount=yellowcount+1;
+    }
 
-
-
-  // }  
+    LastColor = Color;
+    
+    
+  }  
 
 
   }
@@ -68,12 +86,28 @@ public class ColorWheelCommand extends CommandBase {
 
       SmartDashboard.putString("ColorWheel Command","End"  );
       mColorWheelSubSystem.StopColorWheel();
+      
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(yellowcount==3){
+     return true;
+    }
+    if(redcount==3){
+      return true;
+    }
+    if(bluecount==3){
+      return true;
+    }
+    if(greencount==3){
+      return true;
+    }
+    else{
+      return false;
+    }
+   
   }
 }

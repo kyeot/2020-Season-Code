@@ -25,11 +25,11 @@ public class Constants {
     public static final int kLiftMotorPort = 20;
     public static final double kLiftMotorSpeed = 0.7;
 
-    public static final int kColorWheelMotorPort = 21;
-    public static final double kColorWheelMotorSpeed = 0.5;
+    public static final int kColorWheelMotorPort = 9;
+    public static final double kColorWheelMotorSpeed = 0.3;
 
     public static final int kFeederMotorPort = 22;
-    public static final double kFeederMotorSpeed = 0.3;
+    public static final double kFeederMotorSpeed = 0.2;
     
 
     public static final int kImageWidth = 160;
