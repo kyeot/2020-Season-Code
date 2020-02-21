@@ -47,18 +47,9 @@ public class ColorWheelCommand extends CommandBase {
     mColorWheelSubSystem.TurnColorWheel();
     
   String Color = mColorWheelSubSystem.ReadColorSensor();
- if(Color =="Blue"){
-   mLedSubSystem.SetBlueMode(); 
-  }
-  if(Color =="Red"){
-    mLedSubSystem.SetRedMode();
-  }
-  if(Color=="Green"){
-    mLedSubSystem.SetGreenMode();
-  }
-  if(Color=="Yellow"){
-    mLedSubSystem.SetYellowMode();
-  }
+  
+
+  
  
   if (LastColor != Color)
   {
@@ -84,7 +75,24 @@ public class ColorWheelCommand extends CommandBase {
     SmartDashboard.putString("Yellow Count","" + yellowcount  );
     SmartDashboard.putString("Blue Count","" + bluecount );
     SmartDashboard.putString("Red Count","" + redcount  );
-  }  
+
+
+    try {
+      if(Color =="Blue"){
+        mLedSubSystem.SetBlueMode(); 
+       }
+       if(Color =="Red"){
+         mLedSubSystem.SetRedMode();
+       }
+       if(Color=="Green"){
+         mLedSubSystem.SetGreenMode();
+       }
+       if(Color=="Yellow"){
+         mLedSubSystem.SetYellowMode();
+       }
+    } catch (RuntimeException ex) {}
+    
+      }  
 
 
   }
@@ -102,18 +110,18 @@ public class ColorWheelCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(yellowcount==3){
+    if(yellowcount==6){
      return true;
     }
-    if(redcount==3){
+    if(redcount==6){
       return true;
     }
-    if(bluecount==3){
+    if(bluecount==6){
       return true;
     }
-    if(greencount==3){
-      return true;
-    }
+    //if(greencount==3){
+    //  return true;
+    //}
     else{
       return false;
     }
