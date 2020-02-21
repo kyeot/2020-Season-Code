@@ -107,6 +107,9 @@ public class RobotContainer {
 
         // new JoystickButton(mDriverController, Button.kB.value)
         // .whenPressed(new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(5));
+        new JoystickButton(mDriverController, Button.kB.value)
+        .whenPressed(new TurnToTarget(mVisionSubsystem, mDriveSubsystem).withTimeout(3.5));
+
        // new JoystickButton(mDriverController, Button.kB.value)
         //.whenPressed(new TurnToTarget(mVisionSubsystem, mDriveSubsystem).withTimeout(8));
 ///

@@ -155,7 +155,7 @@ public class VisionSubsystem extends SubsystemBase {
   DecimalFormat df = new DecimalFormat("#.##");
   public String getDistance() {
     double distance = (Constants.kGoalTargetSize * GripPipelineBlue.PIPELINE_WIDTH)/(2 * r.width * Math.tan(degreesToRadians(46.5)));
-    SmartDashboard.putString("DB/String 9", "Debug: " + df);
+    //SmartDashboard.putString("DB/String 9", "Debug: " + df);
     return df.format(distance);
   }
 
