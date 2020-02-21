@@ -121,9 +121,9 @@ public class ColorWheelSystem extends SubsystemBase {
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
      */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
+    //SmartDashboard.putNumber("Red", detectedColor.red);
+    //SmartDashboard.putNumber("Green", detectedColor.green);
+    //SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
 

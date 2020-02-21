@@ -8,19 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.ShooterSubSystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCommand extends CommandBase {
 
   ShooterSubSystem mShooterSubSystem;
+  LEDSubSystem mLedSubSystem;
   private double dMaxRPM = 0;
   private boolean bMaxReady = false;
   private int iMaxCount = 0;
 
-  public ShooterCommand(ShooterSubSystem shootersubsystem) {
+  public ShooterCommand(ShooterSubSystem shootersubsystem,LEDSubSystem ledsubsystem) {
     mShooterSubSystem = shootersubsystem;
-
+    mLedSubSystem = ledsubsystem;
     addRequirements(shootersubsystem);
   }
 
@@ -31,29 +33,32 @@ public class ShooterCommand extends CommandBase {
    dMaxRPM =0;
    iMaxCount = 0;
    bMaxReady = false;
+   mLedSubSystem.SetShooterMotorChargingMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double dCurrentSpeed = mShooterSubSystem.GetVelocity();
+    double dCurrentSpeed = Math.abs( mShooterSubSystem.GetVelocity());
 
-    mShooterSubSystem.SetShooterSpeed(0.2);
+    mShooterSubSystem.SetShooterSpeed(-0.3);
+    //mShooterSubSystem.StartFeederMotor();
     //mShooterSubSystem.SetMotorRPM(3000);
     //mShooterSubSystem.SetShooterSpeed(0.4);
-    SmartDashboard.putString("Shooter Velocity: ","" + mShooterSubSystem.GetVelocity()  );
+    SmartDashboard.putString("Shooter Velocity: ","" + dCurrentSpeed  );
 
-    if (dMaxRPM < dCurrentSpeed)
-    {
+    
+    if (dMaxRPM < dCurrentSpeed)  {
       dMaxRPM = dCurrentSpeed;
     } else {
 
-      if ((dMaxRPM/dCurrentSpeed) < 1.05) {
+      if ((dMaxRPM/dCurrentSpeed) < 1.04) {
 
         iMaxCount++;
         if (iMaxCount > 10) {
           bMaxReady = true;
         }
+        
       } else {
         bMaxReady = false;
         iMaxCount = 0;
@@ -61,8 +66,11 @@ public class ShooterCommand extends CommandBase {
     }
 
     if (bMaxReady == true) {
+      
+      mLedSubSystem.SetShootingMode();
       mShooterSubSystem.StartFeederMotor();
     } else {
+      mLedSubSystem.SetShooterMotorChargingMode();
       mShooterSubSystem.StopFeederMotor();
     }
 

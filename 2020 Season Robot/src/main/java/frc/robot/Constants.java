@@ -29,7 +29,7 @@ public class Constants {
     public static final double kColorWheelMotorSpeed = 0.3;
 
     public static final int kFeederMotorPort = 22;
-    public static final double kFeederMotorSpeed = 0.2;
+    public static final double kFeederMotorSpeed = 0.9;
     
 
     public static final int kImageWidth = 160;
@@ -43,13 +43,13 @@ public class Constants {
     public static final class DriveConstants {
        // competition settings
        
-       /*
+    /*   
         public static final int kLeftMotor1Port = 12;
         public static final int kLeftMotor2Port = 13;
         public static final int kRightMotor1Port = 14;
         public static final int kRightMotor2Port = 15;
-        */
-
+        
+*/
         public static final int kLeftMotor1Port = 11;
         public static final int kLeftMotor2Port = 12;
         public static final int kRightMotor1Port = 13;

@@ -58,9 +58,6 @@ public class DriveSubsystem extends SubsystemBase {
     mLeftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
     mRightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
-
-
-
      
     mLeftMotorV1.setNeutralMode(NeutralMode.Brake);
     mLeftMotorV2.setNeutralMode(NeutralMode.Brake);

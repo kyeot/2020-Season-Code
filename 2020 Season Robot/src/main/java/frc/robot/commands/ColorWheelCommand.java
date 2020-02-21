@@ -33,6 +33,11 @@ public class ColorWheelCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    yellowcount = 0;
+    bluecount = 0;
+    redcount = 0;
+    greencount = 0;
+    LastColor = "";
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -74,7 +79,11 @@ public class ColorWheelCommand extends CommandBase {
 
     LastColor = Color;
     
-    
+    SmartDashboard.putString("Last Color","" + LastColor  );
+    SmartDashboard.putString("Green Count","" + greencount  );
+    SmartDashboard.putString("Yellow Count","" + yellowcount  );
+    SmartDashboard.putString("Blue Count","" + bluecount );
+    SmartDashboard.putString("Red Count","" + redcount  );
   }  
 
 

@@ -90,14 +90,17 @@ public class RobotContainer {
         new JoystickButton(mDriverController, Button.kX.value)
          .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(50));
         
+         new JoystickButton(mDriverController, Button.kA.value)
+         .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem).withTimeout(12));
+
+
         //new JoystickButton(mDriverController, Button.kA.value)
         //.whenPressed(new UltrasonicApproachCommand(mDriveSubsystem, mLEDSubsystem).withTimeout(5));
 
        // new JoystickButton(mDriverController, Button.kX.value)
         //.whenPressed(new VisionCommand(mVisionSubsystem, mDriveSubsystem).withTimeout(20));
 
-        new JoystickButton(mDriverController, Button.kA.value)
-        .whenPressed(new ShooterCommand(mShooterSubsystem).withTimeout(12));
+
 
        //new JoystickButton(mDriverController, Button.kA.value)
        //.whenPressed(new ExtendLiftCommand(mLiftSubsystem, mLEDSubsystem,mDriverController).withTimeout(15));
@@ -115,7 +118,7 @@ public class RobotContainer {
             new TurnLeft(mDriveSubsystem,90).withTimeout(8),
             new DriveADistanceInFeet(mDriveSubsystem, 10).withTimeout(10),
             new TurnLeft(mDriveSubsystem,65).withTimeout(8),
-            new ShooterCommand(mShooterSubsystem).withTimeout(5)
+            new ShooterCommand(mShooterSubsystem,mLEDSubsystem).withTimeout(5)
             )
         );
 
