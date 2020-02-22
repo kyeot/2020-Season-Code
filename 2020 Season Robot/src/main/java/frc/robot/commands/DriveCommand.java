@@ -25,6 +25,7 @@ public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem mDriveSubSystem;
   private final XboxController mDriverController; 
+  private final XboxController mManipulatorController;
   private final LEDSubSystem mLEDSubsystem;
   private final LiftSubSystem mLiftSubSystem;
 
@@ -42,9 +43,10 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,LEDSubSystem ledsubsystem,LiftSubSystem liftsubsystem) {
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,XboxController manipulatorcontroller, LEDSubSystem ledsubsystem,LiftSubSystem liftsubsystem) {
     mDriveSubSystem = drivesubsystem;
 	mDriverController = drivercontroller;
+	mManipulatorController = manipulatorcontroller;
 	mLEDSubsystem = ledsubsystem;
 	mLiftSubSystem = liftsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -134,9 +136,9 @@ public class DriveCommand extends CommandBase {
 	}
 
     // Manual Lift - Need to change controllers
-	if ( mDriverController.getPOV()  == 0 ) {
+	if ( mManipulatorController.getPOV()  == 0 ) {
         mLiftSubSystem.RaiseLift();
-    } else if (mDriverController.getPOV() == 180) {
+    } else if (mManipulatorController.getPOV() == 180) {
         mLiftSubSystem.LowerLift();
     } else {
         mLiftSubSystem.StopLift();

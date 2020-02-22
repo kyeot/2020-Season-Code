@@ -13,6 +13,7 @@ package frc.robot;
 public class Constants {
 
     public static final int kDriveController = 0;
+    public static final int kManipulatorController = 1;
 
 
 
@@ -25,11 +26,16 @@ public class Constants {
     public static final int kLiftMotorPort = 20;
     public static final double kLiftMotorSpeed = 0.7;
 
-    public static final int kColorWheelMotorPort = 9;
+    public static final int kColorWheelMotorPort = 21;
     public static final double kColorWheelMotorSpeed = 0.3;
 
     public static final int kFeederMotorPort = 22;
-    public static final double kFeederMotorSpeed = 0.9;
+    public static final double kFeederMotorSpeed = -0.7;
+
+    public static final double kShooterSpeedFast = -0.65;
+    public static final double kShooterSpeedSlow = -0.55;
+    public static final double kShooterSpeedExtraSlow = -0.45;
+    public static final int kShooterRampTime = 4;
     
 
     public static final int kImageWidth = 160;
@@ -43,25 +49,25 @@ public class Constants {
     public static final class DriveConstants {
        // competition settings
        
-    /*   
+     
         public static final int kLeftMotor1Port = 12;
         public static final int kLeftMotor2Port = 13;
         public static final int kRightMotor1Port = 14;
         public static final int kRightMotor2Port = 15;
         
-*/
-        public static final int kLeftMotor1Port = 11;
-        public static final int kLeftMotor2Port = 12;
-        public static final int kRightMotor1Port = 13;
-        public static final int kRightMotor2Port = 15;
+
+        //public static final int kLeftMotor1Port = 11;
+        //public static final int kLeftMotor2Port = 12;
+        //public static final int kRightMotor1Port = 13;
+        //public static final int kRightMotor2Port = 15;
 
         public static final int kUltrasonicPort = 0;
         public static double kValueToInches = 0.125;
     
         public static final int[] kLeftEncoderPorts = new int[]{0, 1};
         public static final int[] kRightEncoderPorts = new int[]{2, 3};
-        public static final boolean kLeftEncoderReversed = false;
-        public static final boolean kRightEncoderReversed = true;
+        public static final boolean kLeftEncoderReversed = true;
+        public static final boolean kRightEncoderReversed = false;
     
         //Using Feet to start
         //public final double kEncoderPulsePerFoot = 21.75;

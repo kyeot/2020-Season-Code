@@ -35,8 +35,8 @@ public class TurnLeft extends CommandBase {
   @Override
   public void execute() {
 
-    mDriveSubsystem.SetRightDriveSpeed(0.2);
-    mDriveSubsystem.SetLeftDriveSpeed(-0.2);
+    mDriveSubsystem.SetRightDriveSpeed(0.3);
+    mDriveSubsystem.SetLeftDriveSpeed(-0.3);
 
 
   }

@@ -36,8 +36,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
   private final AnalogInput mUltrasonic = new AnalogInput(DriveConstants.kUltrasonicPort);
 
-  private final Encoder mLeftEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
-  private final Encoder mRightEncoder = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
+  private final Encoder mRightEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
+  private final Encoder mLeftEncoder  = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
 
 
   public DriveSubsystem() {
