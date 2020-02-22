@@ -106,7 +106,7 @@ public class ShooterCommand extends CommandBase {
        if (dMaxRPM > 0) {
         if (dCurrentSpeed > dMaxRPM * 0.98) {
           mLedSubSystem.SetShootingMode();
-          mShooterSubSystem.StartFeederMotor();
+          mShooterSubSystem.StartFeederMotorSlowMode();
         } else {
           mLedSubSystem.SetShooterMotorChargingMode();
           mShooterSubSystem.StopFeederMotor();

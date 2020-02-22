@@ -98,7 +98,7 @@ public class RobotContainer {
          .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedFast).withTimeout(7));
 
          new JoystickButton(mManipulatorController, Button.kBumperRight.value )
-         .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,false,Constants.kShooterSpeedExtraSlow).withTimeout(12));
+         .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,false,Constants.kShooterSpeedExtraSlow).withTimeout(8));
 
 
         //new JoystickButton(mDriverController, Button.kA.value)
@@ -127,8 +127,20 @@ public class RobotContainer {
 
         new SequentialCommandGroup(
           new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
-            new TurnRight(mDriveSubsystem,165).withTimeout(2),
-            new DriveADistanceInFeet(mDriveSubsystem, 5).withTimeout(10)
+            new TurnRight(mDriveSubsystem,178).withTimeout(2),
+            new DriveADistanceInFeet(mDriveSubsystem, 13).withTimeout(10)
+            )
+        );
+
+        new JoystickButton(mDriverController,Button.kBumperLeft.value)
+        .whenPressed(
+
+        new SequentialCommandGroup(
+          new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
+            new TurnRight(mDriveSubsystem,178).withTimeout(2),
+            new DriveADistanceInFeet(mDriveSubsystem, 4).withTimeout(4),
+            new TurnRight(mDriveSubsystem,35).withTimeout(2),
+            new DriveADistanceInFeet(mDriveSubsystem, 8).withTimeout(10)
             )
         );
         

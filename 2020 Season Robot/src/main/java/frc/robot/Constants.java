@@ -31,10 +31,11 @@ public class Constants {
 
     public static final int kFeederMotorPort = 22;
     public static final double kFeederMotorSpeed = -0.7;
+    public static final double kFeederMotorSpeedSlow = -0.2;
 
     public static final double kShooterSpeedFast = -0.65;
     public static final double kShooterSpeedSlow = -0.55;
-    public static final double kShooterSpeedExtraSlow = -0.45;
+    public static final double kShooterSpeedExtraSlow = -0.5;
     public static final int kShooterRampTime = 4;
     
 
@@ -73,8 +74,8 @@ public class Constants {
         //public final double kEncoderPulsePerFoot = 21.75;
         //public static final double kEncoderDistancePerPulse = 0.045977;
 
-        public static final double kEncoderFootPerDistance = 21.75;
-        public static final double kAutonomousDriveSpeed = 0.2;
+        public static final double kEncoderFootPerDistance = 24.05;
+        public static final double kAutonomousDriveSpeed = 0.4;
 
         public static final int kEncoderCPR = 1024;
         public static final double kWheelDiameterInches = 6;
