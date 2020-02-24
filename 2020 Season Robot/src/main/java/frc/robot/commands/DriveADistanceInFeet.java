@@ -17,11 +17,12 @@ public class DriveADistanceInFeet extends CommandBase {
   private final DriveSubsystem mDriveSubsystem;
   private final double mDistanceInFeet;
   private boolean bFirstRun;
+  private boolean bReverse;
 
-  public DriveADistanceInFeet(DriveSubsystem drive, double distanceinfeet) {
+  public DriveADistanceInFeet(DriveSubsystem drive, double distanceinfeet,boolean reverse) {
 
     mDistanceInFeet = distanceinfeet;
-
+    bReverse = reverse;
     mDriveSubsystem = drive;
     addRequirements(drive);
 
@@ -38,6 +39,14 @@ public class DriveADistanceInFeet extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double dDriveSpeed;
+
+    if (bReverse) {
+      dDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
+    } else {
+      dDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
+    }
 
     //robotdrive.drive(SPEED, Gyro.getAngle() * .03);
     if (bFirstRun == true) {
@@ -65,7 +74,7 @@ public class DriveADistanceInFeet extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if (mDriveSubsystem.getAverageEncoderDistance() / Constants.DriveConstants.kEncoderFootPerDistance > mDistanceInFeet  ) {
+    if (Math.abs(mDriveSubsystem.getAverageEncoderDistance()) / Constants.DriveConstants.kEncoderFootPerDistance > mDistanceInFeet  ) {
       return true;
     }
     else {

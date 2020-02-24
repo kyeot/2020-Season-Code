@@ -59,6 +59,11 @@ public class RobotContainer {
 
   private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController,mManipulatorController,mLEDSubsystem,mLiftSubsystem);
 
+  private final SequentialCommandGroup StraightAutonomous = new SequentialCommandGroup(
+    new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
+      new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5));
+
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -121,29 +126,26 @@ public class RobotContainer {
         //.whenPressed(new TurnToTarget(mVisionSubsystem, mDriveSubsystem).withTimeout(8));
 ///
 
-
         new JoystickButton(mDriverController,Button.kBumperRight.value)
         .whenPressed(
 
         new SequentialCommandGroup(
-          new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
-            new TurnRight(mDriveSubsystem,178).withTimeout(2),
-            new DriveADistanceInFeet(mDriveSubsystem, 13).withTimeout(10)
-            )
-        );
+          new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5))
 
+        );
+/*
         new JoystickButton(mDriverController,Button.kBumperLeft.value)
         .whenPressed(
 
         new SequentialCommandGroup(
           new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
             new TurnRight(mDriveSubsystem,178).withTimeout(2),
-            new DriveADistanceInFeet(mDriveSubsystem, 4).withTimeout(4),
+            new DriveADistanceInFeet(mDriveSubsystem, 4,false).withTimeout(4),
             new TurnRight(mDriveSubsystem,35).withTimeout(2),
-            new DriveADistanceInFeet(mDriveSubsystem, 8).withTimeout(10)
+            new DriveADistanceInFeet(mDriveSubsystem, 8,false).withTimeout(10)
             )
         );
-        
+        */
 
 
          /*
@@ -171,6 +173,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return  mDriveCommand;
+    return  StraightAutonomous;
   }
 }
