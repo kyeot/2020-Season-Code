@@ -9,11 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ColorWheelCommand;
 import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.ShootOnDemandCommand;
 import frc.robot.commands.VisionCommand;
 import frc.robot.commands.TurnRight;
 import frc.robot.commands.TurnToTarget;
@@ -46,7 +48,6 @@ public class RobotContainer {
   private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
   private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
-  //private final IntakeSubsystem mIntakeSubsystem = new IntakeSubsystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
   private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
   //private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
@@ -64,7 +65,6 @@ public class RobotContainer {
       new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5));
 
 
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -73,6 +73,8 @@ public class RobotContainer {
     configureButtonBindings();
 
     mDriveSubsystem.setDefaultCommand(mDriveCommand);
+    //SmartDashboard.putData("Autonomous Command", new SequentialCommandGroup(
+    //  new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5)));
 
     mLEDSubsystem.SetRestingMode();
   }
@@ -85,16 +87,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-  //  new JoystickButton(mDriverController, Button.kX.value)
-    //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
-
-
-    //new JoystickButton(mDriverController, Button.kX.value)
-    //.whenPressed(new TurnLeft(mDriveSubsystem,14).withTimeout(3));
+        //new JoystickButton(mDriverController, Button.kX.value)
+        //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
 
         new JoystickButton(mManipulatorController, Button.kY.value)
-         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem).withTimeout(15));
+         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,false).withTimeout(15));
         
          new JoystickButton(mManipulatorController, Button.kA.value)
          .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(7));
@@ -102,8 +100,14 @@ public class RobotContainer {
          new JoystickButton(mManipulatorController, Button.kB.value)
          .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedFast).withTimeout(7));
 
-         new JoystickButton(mManipulatorController, Button.kBumperRight.value )
-         .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,false,Constants.kShooterSpeedExtraSlow).withTimeout(8));
+
+         //new JoystickButton(mManipulatorController, Button.kA.value)
+         //.whenPressed(new ShootOnDemandCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShootOnDemandSpeedSlow).withTimeout(30));
+
+
+
+        // new JoystickButton(mManipulatorController, Button.kBumperRight.value )
+       //  .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,false,Constants.kShooterSpeedExtraSlow).withTimeout(8));
 
 
         //new JoystickButton(mDriverController, Button.kA.value)
@@ -126,13 +130,6 @@ public class RobotContainer {
         //.whenPressed(new TurnToTarget(mVisionSubsystem, mDriveSubsystem).withTimeout(8));
 ///
 
-        new JoystickButton(mDriverController,Button.kBumperRight.value)
-        .whenPressed(
-
-        new SequentialCommandGroup(
-          new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5))
-
-        );
 /*
         new JoystickButton(mDriverController,Button.kBumperLeft.value)
         .whenPressed(
@@ -148,20 +145,6 @@ public class RobotContainer {
         */
 
 
-         /*
-    new JoystickButton(mDriverController, Button.kA.value)
-        .whenPressed(() -> m_robotArm.setGoal(2), m_robotArm);
-
-       
-    // Move the arm to neutral position when the 'B' button is pressed.
-    new JoystickButton(m_driverController, Button.kB.value)
-        .whenPressed(() -> m_robotArm.setGoal(Constants.ArmConstants.kArmOffsetRads), m_robotArm);
-
-    // Drive at half speed when the bumper is held
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-        .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
-        .whenReleased(() -> m_robotDrive.setMaxOutput(1));
-    */
 
   }
 

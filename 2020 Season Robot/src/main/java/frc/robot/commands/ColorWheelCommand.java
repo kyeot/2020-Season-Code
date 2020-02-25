@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,15 +19,19 @@ public class ColorWheelCommand extends CommandBase {
 
   private final ColorWheelSystem mColorWheelSubSystem;
   private final LEDSubSystem mLedSubSystem;
+  private final XboxController mManipulatorController;
   private  String LastColor;
+  private boolean bManualSpin = false;
   private int bluecount;
   private int redcount;
   private int greencount;
   private int yellowcount;
 
-  public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem) {
+  public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem,XboxController manipulatorcontroller,boolean manualspin) {
     mColorWheelSubSystem = colorwheelsystem;
     mLedSubSystem = ledsubsystem;
+    bManualSpin = manualspin;
+    mManipulatorController = manipulatorcontroller;
     addRequirements(colorwheelsystem);
     //addRequirements(ledsubsystem);
   }
@@ -44,11 +50,34 @@ public class ColorWheelCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putString("ColorWheel Command","Active"  );
-    mColorWheelSubSystem.TurnColorWheel();
-    
-  String Color = mColorWheelSubSystem.ReadColorSensor();
-  
 
+    if (bManualSpin == false) {
+      mColorWheelSubSystem.TurnColorWheel();
+    } else {
+      if (mManipulatorController.getBumperPressed(Hand.kLeft )) {
+        mColorWheelSubSystem.TurnColorWheel();
+      }else {
+        mColorWheelSubSystem.StopColorWheel();
+      }
+    }
+    
+    
+   String Color = mColorWheelSubSystem.ReadColorSensor();
+  
+   try {
+    if(Color =="Blue"){
+      mLedSubSystem.SetBlueMode(); 
+     }
+     if(Color =="Red"){
+       mLedSubSystem.SetRedMode();
+     }
+     if(Color=="Green"){
+       mLedSubSystem.SetGreenMode();
+     }
+     if(Color=="Yellow"){
+       mLedSubSystem.SetYellowMode();
+     }
+  } catch (RuntimeException ex) {}
   
  
   if (LastColor != Color)
@@ -69,6 +98,7 @@ public class ColorWheelCommand extends CommandBase {
     }
 
     LastColor = Color;
+  }  
     
     SmartDashboard.putString("Last Color","" + LastColor  );
     SmartDashboard.putString("Green Count","" + greencount  );
@@ -77,22 +107,9 @@ public class ColorWheelCommand extends CommandBase {
     SmartDashboard.putString("Red Count","" + redcount  );
 
 
-    try {
-      if(Color =="Blue"){
-        mLedSubSystem.SetBlueMode(); 
-       }
-       if(Color =="Red"){
-         mLedSubSystem.SetRedMode();
-       }
-       if(Color=="Green"){
-         mLedSubSystem.SetGreenMode();
-       }
-       if(Color=="Yellow"){
-         mLedSubSystem.SetYellowMode();
-       }
-    } catch (RuntimeException ex) {}
+
     
-      }  
+
 
 
   }
@@ -110,6 +127,9 @@ public class ColorWheelCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    return false;
+
+    /*
     if(yellowcount==6){
      return true;
     }
@@ -125,6 +145,7 @@ public class ColorWheelCommand extends CommandBase {
     else{
       return false;
     }
+    */
    
   }
 }

@@ -120,7 +120,7 @@ public class DriveCommand extends CommandBase {
 	double averageSpeed = (Math.abs(leftSpeed) + Math.abs(rightSpeed)) /2;
 
 	if (averageSpeed == 0) {
-		mLEDSubsystem.SetRestingMode();
+		//mLEDSubsystem.SetRestingMode();
 	}
 
 	if (averageSpeed  >0 && averageSpeed < 0.3) {

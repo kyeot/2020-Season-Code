@@ -51,14 +51,14 @@ public class DriveADistanceInFeet extends CommandBase {
     //robotdrive.drive(SPEED, Gyro.getAngle() * .03);
     if (bFirstRun == true) {
       SmartDashboard.putString("Initial Heading: ","" + mDriveSubsystem.getHeading()  );
-      mDriveSubsystem.SetRightDriveSpeed(-Constants.DriveConstants.kAutonomousDriveSpeed  );
-      mDriveSubsystem.SetLeftDriveSpeed(-Constants.DriveConstants.kAutonomousDriveSpeed );
+      mDriveSubsystem.SetRightDriveSpeed(-dDriveSpeed  );
+      mDriveSubsystem.SetLeftDriveSpeed(-dDriveSpeed );
       bFirstRun = false;
     }
     else {
       SmartDashboard.putString("Commnad Heading: ","" + mDriveSubsystem.getHeading()  );
-      mDriveSubsystem.SetRightDriveSpeed(-Constants.DriveConstants.kAutonomousDriveSpeed + (Constants.DriveConstants.kAutonomousDriveSpeed * mDriveSubsystem.getHeading() * .03 ));
-      mDriveSubsystem.SetLeftDriveSpeed(-Constants.DriveConstants.kAutonomousDriveSpeed );
+      mDriveSubsystem.SetRightDriveSpeed(-dDriveSpeed + (Constants.DriveConstants.kAutonomousDriveSpeed * mDriveSubsystem.getHeading() * .03 ));
+      mDriveSubsystem.SetLeftDriveSpeed(-dDriveSpeed );
     }
 
 

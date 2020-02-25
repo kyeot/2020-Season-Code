@@ -37,6 +37,8 @@ public class Constants {
     public static final double kShooterSpeedSlow = -0.55;
     public static final double kShooterSpeedExtraSlow = -0.5;
     public static final int kShooterRampTime = 4;
+
+    public static final double kShootOnDemandSpeedSlow = -0.47;
     
 
     public static final int kImageWidth = 160;
