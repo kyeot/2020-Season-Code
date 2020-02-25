@@ -62,7 +62,7 @@ public class RobotContainer {
 
   private final SequentialCommandGroup StraightAutonomous = new SequentialCommandGroup(
     new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
-      new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(5));
+      new DriveADistanceInFeet(mDriveSubsystem, 35,true).withTimeout(5));
 
 
   /**
@@ -90,6 +90,8 @@ public class RobotContainer {
         //new JoystickButton(mDriverController, Button.kX.value)
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
+        new JoystickButton(mManipulatorController, Button.kBumperRight.value)
+        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(15));
 
         new JoystickButton(mManipulatorController, Button.kY.value)
          .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,false).withTimeout(15));
