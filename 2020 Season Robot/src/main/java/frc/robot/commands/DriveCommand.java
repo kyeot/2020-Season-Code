@@ -142,6 +142,13 @@ public class DriveCommand extends CommandBase {
         mLiftSubSystem.LowerLift();
     } else {
         mLiftSubSystem.StopLift();
+	}
+	
+	if ( mManipulatorController.getRawAxis(2) > 0 ) {
+        mLiftSubSystem.SetLiftSpeed(mManipulatorController.getRawAxis(2)); 
+    }
+    if ( mDriverController.getRawAxis(3) > 0 ) {
+        mLiftSubSystem.SetLiftSpeed(-mManipulatorController.getRawAxis(3)); 
     }
 	
 	//SmartDashboard.putString("left","" + speedLeft );

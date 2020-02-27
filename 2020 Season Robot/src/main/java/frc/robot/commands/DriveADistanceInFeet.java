@@ -19,7 +19,7 @@ public class DriveADistanceInFeet extends CommandBase {
   private boolean bFirstRun;
   private boolean bReverse;
 
-  public DriveADistanceInFeet(DriveSubsystem drive, double distanceinfeet,boolean reverse) {
+  public DriveADistanceInFeet(DriveSubsystem drive, double distanceinfeet, boolean reverse) {
 
     mDistanceInFeet = distanceinfeet;
     bReverse = reverse;

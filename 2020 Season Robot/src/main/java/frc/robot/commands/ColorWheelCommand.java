@@ -27,7 +27,7 @@ public class ColorWheelCommand extends CommandBase {
   private int greencount;
   private int yellowcount;
 
-  public ColorWheelCommand(ColorWheelSystem colorwheelsystem,LEDSubSystem ledsubsystem,XboxController manipulatorcontroller,boolean manualspin) {
+  public ColorWheelCommand(ColorWheelSystem colorwheelsystem, LEDSubSystem ledsubsystem, XboxController manipulatorcontroller, boolean manualspin) {
     mColorWheelSubSystem = colorwheelsystem;
     mLedSubSystem = ledsubsystem;
     bManualSpin = manualspin;
@@ -49,12 +49,12 @@ public class ColorWheelCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putString("ColorWheel Command","Active"  );
+    SmartDashboard.putString("ColorWheel Command", "Active");
 
     if (bManualSpin == false) {
       mColorWheelSubSystem.TurnColorWheel();
     } else {
-      if (mManipulatorController.getBumperPressed(Hand.kLeft )) {
+      if (mManipulatorController.getBumperPressed(Hand.kLeft)) {
         mColorWheelSubSystem.TurnColorWheel();
       }else {
         mColorWheelSubSystem.StopColorWheel();

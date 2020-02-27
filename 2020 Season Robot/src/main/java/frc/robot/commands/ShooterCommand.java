@@ -30,7 +30,7 @@ public class ShooterCommand extends CommandBase {
   private double dMotorSpeed = 0;
   private double dStartTime = 0;
 
-  public ShooterCommand(ShooterSubSystem shootersubsystem,LEDSubSystem ledsubsystem,XboxController manipulatorcontroller,boolean vomitmode,double speed) {
+  public ShooterCommand(ShooterSubSystem shootersubsystem, LEDSubSystem ledsubsystem, XboxController manipulatorcontroller, boolean vomitmode, double speed) {
     mShooterSubSystem = shootersubsystem;
     mLedSubSystem = ledsubsystem;
     mManipulatorController = manipulatorcontroller;
@@ -43,7 +43,7 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void initialize() {
    // mShooterSubSystem.StartFeederMotor();
-   dMaxRPM =0;
+   dMaxRPM = 0;
    iMaxCount = 0;
    bMaxReady = false;
    dStartTime = Timer.getFPGATimestamp();
@@ -53,7 +53,7 @@ public class ShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double dCurrentSpeed = Math.abs( mShooterSubSystem.GetVelocity());
+    double dCurrentSpeed = Math.abs(mShooterSubSystem.GetVelocity());
 
    //0.6 = 3188 RPM
    //0.7 = 3645 RPM
@@ -61,7 +61,7 @@ public class ShooterCommand extends CommandBase {
    //0.5 = 2588 RPM
 
     mShooterSubSystem.SetShooterSpeed(dMotorSpeed);
-    SmartDashboard.putString("Shooter Velocity: ","" + dCurrentSpeed  );
+    SmartDashboard.putString("Shooter Velocity: ","" + dCurrentSpeed);
 
 
 

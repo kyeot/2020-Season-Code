@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ColorWheelCommand;
+import frc.robot.commands.DefaultAutonomous;
 import frc.robot.commands.DriveADistanceInFeet;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
@@ -22,6 +23,7 @@ import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.UltrasonicApproachCommand;
 import frc.robot.commands.TurnLeft;
 import frc.robot.commands.ExtendLiftCommand;
+import frc.robot.commands.JustDriveForward;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
@@ -60,9 +62,9 @@ public class RobotContainer {
 
   private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController,mManipulatorController,mLEDSubsystem,mLiftSubsystem);
 
-  private final SequentialCommandGroup StraightAutonomous = new SequentialCommandGroup(
-    new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
-      new DriveADistanceInFeet(mDriveSubsystem, 35,true).withTimeout(5));
+  private final SequentialCommandGroup StraightAutonomous = new DefaultAutonomous(mDriveSubsystem, mShooterSubsystem, mLEDSubsystem, mManipulatorController, 7);
+
+  private final SequentialCommandGroup test = new JustDriveForward(mDriveSubsystem);
 
 
   /**
@@ -158,6 +160,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return  StraightAutonomous;
+    return StraightAutonomous;
   }
 }

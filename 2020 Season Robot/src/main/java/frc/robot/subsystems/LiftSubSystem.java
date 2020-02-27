@@ -47,6 +47,10 @@ public class LiftSubSystem extends SubsystemBase {
     mLiftMotor.set(ControlMode.PercentOutput, 0 );
   }
 
+  public void SetLiftSpeed(double speed) {
+    mLiftMotor.set(ControlMode.PercentOutput, speed);
+  }
+
   public boolean isSwitchSet() {
     return counter.get() > 0;
   }
