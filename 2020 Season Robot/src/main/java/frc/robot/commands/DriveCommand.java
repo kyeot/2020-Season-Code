@@ -144,14 +144,21 @@ public class DriveCommand extends CommandBase {
         mLiftSubSystem.StopLift();
 	}
 	
-	if ( mManipulatorController.getRawAxis(2) > 0 ) {
-        mLiftSubSystem.SetLiftSpeed(mManipulatorController.getRawAxis(2)); 
-    }
-    if ( mDriverController.getRawAxis(3) > 0 ) {
-        mLiftSubSystem.SetLiftSpeed(-mManipulatorController.getRawAxis(3)); 
+	if ( mManipulatorController.getRawAxis(2) != 0) {
+		SmartDashboard.putString(" axis 2","" + mManipulatorController.getRawAxis(2));
+        mLiftSubSystem.SetLiftSpeed(-mManipulatorController.getRawAxis(2)); 
+	}
+	
+    if ( mManipulatorController.getRawAxis(3) != 0 ) {
+		SmartDashboard.putString(" axis 3","" + mManipulatorController.getRawAxis(3));
+        mLiftSubSystem.SetLiftSpeed(mManipulatorController.getRawAxis(3)); 
     }
 	
 	//SmartDashboard.putString("left","" + speedLeft );
+
+
+
+
     SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
     SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );

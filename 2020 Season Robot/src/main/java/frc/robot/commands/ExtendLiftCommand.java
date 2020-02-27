@@ -29,6 +29,9 @@ public class ExtendLiftCommand extends CommandBase {
     addRequirements(liftsubsystem);
     addRequirements(ledsubsystem);
 
+
+    //Port 4 - Encoder
+
   }
 
   // Called when the command is initially scheduled.

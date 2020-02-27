@@ -93,7 +93,7 @@ public class RobotContainer {
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
         new JoystickButton(mManipulatorController, Button.kBumperRight.value)
-        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(15));
+        .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(20));
 
         new JoystickButton(mManipulatorController, Button.kY.value)
          .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,false).withTimeout(15));
@@ -160,6 +160,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return StraightAutonomous;
+    //return StraightAutonomous;
+
+    //return      new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5);
+ 
+
+    return  new SequentialCommandGroup(
+      new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
+        new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(4)
+        );
+    
+
   }
 }

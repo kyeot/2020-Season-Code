@@ -54,7 +54,7 @@ public class ColorWheelCommand extends CommandBase {
     if (bManualSpin == false) {
       mColorWheelSubSystem.TurnColorWheel();
     } else {
-      if (mManipulatorController.getBumperPressed(Hand.kLeft)) {
+      if (mManipulatorController.getBumperPressed (Hand.kLeft)) {
         mColorWheelSubSystem.TurnColorWheel();
       }else {
         mColorWheelSubSystem.StopColorWheel();
