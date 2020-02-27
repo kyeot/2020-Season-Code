@@ -26,8 +26,8 @@ public class ExtendLiftCommand extends CommandBase {
     mLedSubSystem = ledsubsystem;
     mControler = controller;
 
-    addRequirements(liftsubsystem);
-    addRequirements(ledsubsystem);
+    //addRequirements(liftsubsystem);
+
 
 
     //Port 4 - Encoder
@@ -37,34 +37,37 @@ public class ExtendLiftCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mLiftSubSystem.ResetSwitch();
-    mLedSubSystem.SetLEDMode(0.2);
+    mLiftSubSystem.ResetEncoder();
+    //mLedSubSystem.SetLEDMode(0.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-
-
-
+    SmartDashboard.putString("Lift Command End","False"  );
+    mLiftSubSystem.SetLiftSpeed(-0.7);
+    SmartDashboard.putString("Encoder","" + mLiftSubSystem.GetEncoderDistance() );
     /*
-    SmartDashboard.putString("Limit Switch","" + mLiftSubSystem.isSwitchSet() );
     if (mLiftSubSystem.isSwitchSet() == true) {
       mLedSubSystem.SetLEDMode(0.7);
     }
     */
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //mLedSubSystem.SetLEDMode(0);
+    SmartDashboard.putString("Lift Command End","True"  );
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (mLiftSubSystem.GetEncoderDistance() >0.74 ) {
+      return true;
+    } else {}
+      return false;
+    }
   }
 }

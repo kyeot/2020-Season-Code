@@ -158,7 +158,7 @@ public class DriveCommand extends CommandBase {
 
 
 
-
+	SmartDashboard.putString("Encoder","" + mLiftSubSystem.GetEncoderDistance() );
     SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
     SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );

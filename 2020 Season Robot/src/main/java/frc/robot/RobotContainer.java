@@ -92,6 +92,9 @@ public class RobotContainer {
         //new JoystickButton(mDriverController, Button.kX.value)
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
+        new JoystickButton(mManipulatorController, Button.kStickLeft.value )
+        .whenPressed(new ExtendLiftCommand (mLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(0.7));
+
         new JoystickButton(mManipulatorController, Button.kBumperRight.value)
         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(20));
 

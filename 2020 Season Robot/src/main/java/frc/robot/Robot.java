@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,7 +24,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-
+  private static final int IMG_WIDTH = 480;
+  private static final int IMG_HEIGHT = 360;
+  private UsbCamera camera;
   private RobotContainer m_robotContainer;
 
   /**
@@ -35,6 +39,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     String[] autonomousList = {"Shooter Auto"};
+
+    camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
 		SmartDashboard.putStringArray("Auto List", autonomousList);
 

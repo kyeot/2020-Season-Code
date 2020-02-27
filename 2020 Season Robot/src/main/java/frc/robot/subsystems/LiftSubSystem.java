@@ -15,12 +15,15 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class LiftSubSystem extends SubsystemBase {
 
   VictorSPX mLiftMotor;
-  DigitalInput limitSwitch = new DigitalInput(4);
-  Counter counter = new Counter(limitSwitch);
+  //DigitalInput limitSwitch = new DigitalInput(4);
+  //Counter counter = new Counter(limitSwitch);
+
+  private DutyCycleEncoder mEncoder;
 
   public LiftSubSystem() {
 
@@ -33,6 +36,24 @@ public class LiftSubSystem extends SubsystemBase {
 			DriverStation.reportError("Error Lift Motor Controller:  " + ex.getMessage(), true);
     }
 
+    try {
+      mEncoder = new DutyCycleEncoder(4);
+      mEncoder.setDistancePerRotation(1);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Lift Lift Encoder:  " + ex.getMessage(), true);
+    }
+
+
+
+
+  }
+
+  public double GetEncoderDistance() {
+    return mEncoder.getDistance();
+  }
+
+  public void ResetEncoder() {
+    mEncoder.reset();
   }
 
   public void RaiseLift() {
@@ -51,6 +72,7 @@ public class LiftSubSystem extends SubsystemBase {
     mLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  /*
   public boolean isSwitchSet() {
     return counter.get() > 0;
   }
@@ -59,6 +81,7 @@ public class LiftSubSystem extends SubsystemBase {
   {
     counter.reset();
   }
+  */
 
   @Override
   public void periodic() {
