@@ -65,18 +65,33 @@ public class ColorWheelCommand extends CommandBase {
     
    String Color = mColorWheelSubSystem.ReadColorSensor();
   
-   try {
+  //  try {
+  //   if(Color =="Blue"){
+  //     mLedSubSystem.SetBlueMode(); 
+  //    }
+  //    if(Color =="Red"){
+  //      mLedSubSystem.SetRedMode();
+  //    }
+  //    if(Color=="Green"){
+  //      mLedSubSystem.SetGreenMode();
+  //    }
+  //    if(Color=="Yellow"){
+  //      mLedSubSystem.SetYellowMode();
+  //    }
+  // } catch (RuntimeException ex) {}
+
+  try {
     if(Color =="Blue"){
-      mLedSubSystem.SetBlueMode(); 
+      mLedSubSystem.SetRedMode(); 
      }
      if(Color =="Red"){
-       mLedSubSystem.SetRedMode();
+       mLedSubSystem.SetBlueMode();
      }
      if(Color=="Green"){
-       mLedSubSystem.SetGreenMode();
+       mLedSubSystem.SetYellowMode();
      }
      if(Color=="Yellow"){
-       mLedSubSystem.SetYellowMode();
+       mLedSubSystem.SetGreenMode();
      }
   } catch (RuntimeException ex) {}
   
