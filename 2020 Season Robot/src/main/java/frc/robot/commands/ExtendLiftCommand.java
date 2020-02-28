@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.LiftSubSystem;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,6 +20,7 @@ public class ExtendLiftCommand extends CommandBase {
   LiftSubSystem mLiftSubSystem;
   LEDSubSystem mLedSubSystem;
   XboxController mControler;
+  private double dStartTime = 0;
 
   public ExtendLiftCommand(LiftSubSystem liftsubsystem, LEDSubSystem ledsubsystem,XboxController controller) {
 
@@ -38,6 +40,8 @@ public class ExtendLiftCommand extends CommandBase {
   @Override
   public void initialize() {
     mLiftSubSystem.ResetEncoder();
+    mLiftSubSystem.SetLiftSpeed(-1);
+    dStartTime = 0;
     //mLedSubSystem.SetLEDMode(0.2);
   }
 
@@ -45,7 +49,13 @@ public class ExtendLiftCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putString("Lift Command End","False"  );
-    mLiftSubSystem.SetLiftSpeed(-0.7);
+
+    if (Timer.getFPGATimestamp() - dStartTime > 0.1) {
+      mLiftSubSystem.SetLiftSpeed(-0.35);
+    }
+
+
+    
     SmartDashboard.putString("Encoder","" + mLiftSubSystem.GetEncoderDistance() );
     /*
     if (mLiftSubSystem.isSwitchSet() == true) {
@@ -64,9 +74,9 @@ public class ExtendLiftCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mLiftSubSystem.GetEncoderDistance() >0.74 ) {
+    if (mLiftSubSystem.GetEncoderDistance() >0.68 ) {
       return true;
-    } else {}
+    } else {
       return false;
     }
   }
