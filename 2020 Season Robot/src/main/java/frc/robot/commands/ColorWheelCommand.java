@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,6 +27,8 @@ public class ColorWheelCommand extends CommandBase {
   private int redcount;
   private int greencount;
   private int yellowcount;
+  String gameData;
+  
 
   public ColorWheelCommand(ColorWheelSystem colorwheelsystem, LEDSubSystem ledsubsystem, XboxController manipulatorcontroller, boolean manualspin) {
     mColorWheelSubSystem = colorwheelsystem;
@@ -44,6 +47,28 @@ public class ColorWheelCommand extends CommandBase {
     redcount = 0;
     greencount = 0;
     LastColor = "";
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0) {
+      switch (gameData.charAt(0)) {
+        case 'B' :
+          SmartDashboard.putString("DB/String 0", "Blue");
+        break;
+        case 'G' :
+          SmartDashboard.putString("DB/String 0", "Green");
+        break;
+        case 'R' :
+          SmartDashboard.putString("DB/String 0", "Red");
+        break;
+        case 'Y' :
+          SmartDashboard.putString("DB/String 0", "Yellow");
+        break;
+        default :
+          SmartDashboard.putString("DB/String 0", "Error");
+        break;
+  }
+} else {
+  //Code for no data received yet
+}
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -65,18 +90,33 @@ public class ColorWheelCommand extends CommandBase {
     
    String Color = mColorWheelSubSystem.ReadColorSensor();
   
-   try {
+  //  try {
+  //   if(Color =="Blue"){
+  //     mLedSubSystem.SetBlueMode(); 
+  //    }
+  //    if(Color =="Red"){
+  //      mLedSubSystem.SetRedMode();
+  //    }
+  //    if(Color=="Green"){
+  //      mLedSubSystem.SetGreenMode();
+  //    }
+  //    if(Color=="Yellow"){
+  //      mLedSubSystem.SetYellowMode();
+  //    }
+  // } catch (RuntimeException ex) {}
+
+  try {
     if(Color =="Blue"){
-      mLedSubSystem.SetBlueMode(); 
+      mLedSubSystem.SetRedMode(); 
      }
      if(Color =="Red"){
-       mLedSubSystem.SetRedMode();
+       mLedSubSystem.SetBlueMode();
      }
      if(Color=="Green"){
-       mLedSubSystem.SetGreenMode();
+       mLedSubSystem.SetYellowMode();
      }
      if(Color=="Yellow"){
-       mLedSubSystem.SetYellowMode();
+       mLedSubSystem.SetGreenMode();
      }
   } catch (RuntimeException ex) {}
   
