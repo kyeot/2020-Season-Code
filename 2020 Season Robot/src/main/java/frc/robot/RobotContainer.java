@@ -93,13 +93,13 @@ public class RobotContainer {
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
         new JoystickButton(mManipulatorController, Button.kStickLeft.value )
-        .whenPressed(new ExtendLiftCommand (mLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(0.7));
+        .whenPressed(new ExtendLiftCommand (mLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(3));
 
         new JoystickButton(mManipulatorController, Button.kBumperRight.value)
         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(20));
 
         new JoystickButton(mManipulatorController, Button.kY.value)
-         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,false).withTimeout(15));
+         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,false).withTimeout(6));
         
          new JoystickButton(mManipulatorController, Button.kA.value)
          .whenPressed(new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(7));
@@ -170,7 +170,7 @@ public class RobotContainer {
 
     return  new SequentialCommandGroup(
       new ShooterCommand(mShooterSubsystem,mLEDSubsystem,mManipulatorController,true,Constants.kShooterSpeedSlow).withTimeout(5),
-        new DriveADistanceInFeet(mDriveSubsystem, 4,true).withTimeout(4)
+        new DriveADistanceInFeet(mDriveSubsystem, 4,false).withTimeout(4)
         );
     
 

@@ -41,7 +41,7 @@ public class ExtendLiftCommand extends CommandBase {
   public void initialize() {
     mLiftSubSystem.ResetEncoder();
     mLiftSubSystem.SetLiftSpeed(-1);
-    dStartTime = 0;
+    dStartTime = Timer.getFPGATimestamp();
     //mLedSubSystem.SetLEDMode(0.2);
   }
 
@@ -74,7 +74,7 @@ public class ExtendLiftCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mLiftSubSystem.GetEncoderDistance() >0.68 ) {
+    if (mLiftSubSystem.GetEncoderDistance() >1.1 ) {
       return true;
     } else {
       return false;

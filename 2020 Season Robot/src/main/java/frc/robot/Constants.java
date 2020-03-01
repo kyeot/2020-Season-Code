@@ -54,7 +54,7 @@ public class Constants {
        
      
         public static final int kLeftMotor1Port = 12;
-        public static final int kLeftMotor2Port = 13;
+        public static final int kLeftMotor2Port = 24;
         public static final int kRightMotor1Port = 14;
         public static final int kRightMotor2Port = 15;
         
