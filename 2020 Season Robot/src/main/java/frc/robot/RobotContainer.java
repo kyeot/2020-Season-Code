@@ -27,6 +27,7 @@ import frc.robot.commands.JustDriveForward;
 import frc.robot.subsystems.ColorWheelSystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
+import frc.robot.subsystems.UltraSonicSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubSystem;
 import frc.robot.subsystems.NeoLiftSubSystem;
@@ -53,6 +54,7 @@ public class RobotContainer {
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
   private final NeoLiftSubSystem mNeoLiftSubsystem = new NeoLiftSubSystem();
+  private final UltraSonicSubsystem mUltraSonicSubsystem = new UltraSonicSubsystem();
   //private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 

@@ -71,7 +71,6 @@ public class DriveCommand extends CommandBase {
   public void execute() {
 
 
-	double distanceToTarget = mDriveSubSystem.GetSensorDistanceInInches();
 
     double scale;
 		
@@ -164,7 +163,6 @@ public class DriveCommand extends CommandBase {
     SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
 	SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
-	SmartDashboard.putString("Distance to Target: ","" + distanceToTarget);
 	SmartDashboard.putString("POV2: ","" + mDriverController.getPOV()) ;
 		
   }
