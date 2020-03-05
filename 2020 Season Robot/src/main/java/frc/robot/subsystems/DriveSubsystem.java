@@ -34,7 +34,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-  private final AnalogInput mUltrasonic = new AnalogInput(DriveConstants.kUltrasonicPort);
+
 
   private final Encoder mRightEncoder  = new Encoder(0, 1, DriveConstants.kLeftEncoderReversed);;
   private final Encoder mLeftEncoder  = new Encoder(2, 3, DriveConstants.kRightEncoderReversed);;
@@ -126,9 +126,7 @@ public class DriveSubsystem extends SubsystemBase {
     return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
-  public double GetSensorDistanceInInches() {
-    return mUltrasonic.getValue() * DriveConstants.kValueToInches;
-  }
+
 
 
   @Override

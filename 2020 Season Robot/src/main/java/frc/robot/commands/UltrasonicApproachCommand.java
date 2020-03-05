@@ -10,15 +10,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubSystem;
+import frc.robot.subsystems.UltraSonicSubsystem;
 
 public class UltrasonicApproachCommand extends CommandBase {
 
   DriveSubsystem mDriveSubsystem;
   LEDSubSystem mLEDSubSystem;
+  UltraSonicSubsystem mUltrasonicSubSystem;
 
-  public UltrasonicApproachCommand(DriveSubsystem drivesubsystem,LEDSubSystem ledsubsystem) {
+  public UltrasonicApproachCommand(DriveSubsystem drivesubsystem,LEDSubSystem ledsubsystem,UltraSonicSubsystem ultrasonicsubsystem) {
     mDriveSubsystem = drivesubsystem;
     mLEDSubSystem = ledsubsystem;
+    mUltrasonicSubSystem = ultrasonicsubsystem;
     addRequirements(drivesubsystem);
   }
 
@@ -34,7 +37,7 @@ public class UltrasonicApproachCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if (mDriveSubsystem.GetSensorDistanceInInches() > 15) {
+    if (mUltrasonicSubSystem.GetSensorDistanceInInches() > 15) {
       mDriveSubsystem.SetLeftDriveSpeed(-0.2);
       mDriveSubsystem.SetRightDriveSpeed(-0.2);
     } else 
@@ -54,7 +57,7 @@ public class UltrasonicApproachCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mDriveSubsystem.GetSensorDistanceInInches() > 15) {
+    if (mUltrasonicSubSystem.GetSensorDistanceInInches() > 15) {
       return false;
     } else 
     {

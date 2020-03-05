@@ -62,11 +62,14 @@ public class ShootOnDemandCommand extends CommandBase {
   public void execute() {
     double dCurrentSpeed = Math.abs( mShooterSubSystem.GetVelocity());
 
+    mShooterSubSystem.SetFeederMotorSpeed(0.25);
+
     //0.6 = 3188 RPM
     //0.7 = 3645 RPM
     //0.8 = 4085 RPM
     //0.5 = 2588 RPM
  
+    /*
      mShooterSubSystem.SetShooterSpeed(dMotorSpeed);
      SmartDashboard.putString("Shooter Velocity: ","" + dCurrentSpeed  );
  
@@ -146,7 +149,7 @@ public class ShootOnDemandCommand extends CommandBase {
        }
      }
  
- 
+ */
  
      SmartDashboard.putString("Max RPM ","" + dMaxRPM  );
    }

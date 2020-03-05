@@ -94,6 +94,9 @@ public class ShooterSubSystem extends SubsystemBase {
     mFeederMotor.set(ControlMode.PercentOutput, Constants.kFeederMotorSpeedSlow) ;   
   }
 
+  public void SetFeederMotorSpeed(double speed) {
+    mFeederMotor.set(ControlMode.PercentOutput, speed) ;   
+  }
  
 
   public void StopFeederMotor() {
