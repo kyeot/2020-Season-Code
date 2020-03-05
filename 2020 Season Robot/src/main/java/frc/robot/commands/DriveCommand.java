@@ -11,6 +11,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.LiftSubSystem;
+import frc.robot.subsystems.NeoLiftSubSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,7 +28,7 @@ public class DriveCommand extends CommandBase {
   private final XboxController mDriverController; 
   private final XboxController mManipulatorController;
   private final LEDSubSystem mLEDSubsystem;
-  private final LiftSubSystem mLiftSubSystem;
+  private final NeoLiftSubSystem mNeoLiftSubSystem;
 
   double leftSpeed;
   double rightSpeed;
@@ -43,16 +44,16 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,XboxController manipulatorcontroller, LEDSubSystem ledsubsystem,LiftSubSystem liftsubsystem) {
+  public DriveCommand( DriveSubsystem drivesubsystem, XboxController drivercontroller,XboxController manipulatorcontroller, LEDSubSystem ledsubsystem,NeoLiftSubSystem neoliftsubsystem) {
     mDriveSubSystem = drivesubsystem;
 	mDriverController = drivercontroller;
 	mManipulatorController = manipulatorcontroller;
 	mLEDSubsystem = ledsubsystem;
-	mLiftSubSystem = liftsubsystem;
+	mNeoLiftSubSystem = neoliftsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
 	addRequirements(drivesubsystem);
 	addRequirements(ledsubsystem);
-	addRequirements(liftsubsystem);
+	addRequirements(neoliftsubsystem);
 
   }
 
@@ -137,28 +138,28 @@ public class DriveCommand extends CommandBase {
 
     // Manual Lift - Need to change controllers
 	if ( mManipulatorController.getPOV()  == 0 ) {
-        mLiftSubSystem.RaiseLift();
+        mNeoLiftSubSystem.RaiseLift();
     } else if (mManipulatorController.getPOV() == 180) {
-        mLiftSubSystem.LowerLift();
+        mNeoLiftSubSystem.LowerLift();
     } else {
-        mLiftSubSystem.StopLift();
+        mNeoLiftSubSystem.StopLift();
 	}
 	
 	if ( mManipulatorController.getRawAxis(2) != 0) {
 		SmartDashboard.putString(" axis 2","" + mManipulatorController.getRawAxis(2));
-        mLiftSubSystem.SetLiftSpeed(-mManipulatorController.getRawAxis(2)); 
+        mNeoLiftSubSystem.SetLiftSpeed(-mManipulatorController.getRawAxis(2)); 
 	}
 	
     if ( mManipulatorController.getRawAxis(3) != 0 ) {
 		SmartDashboard.putString(" axis 3","" + mManipulatorController.getRawAxis(3));
-        mLiftSubSystem.SetLiftSpeed(mManipulatorController.getRawAxis(3)); 
+        mNeoLiftSubSystem.SetLiftSpeed(mManipulatorController.getRawAxis(3)); 
     }
 	
 	//SmartDashboard.putString("left","" + speedLeft );
 
 
 
-	SmartDashboard.putString("Encoder","" + mLiftSubSystem.GetEncoderDistance() );
+	SmartDashboard.putString("Encoder","" + mNeoLiftSubSystem.GetEncoderDistance() );
     SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
     SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
     SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );

@@ -23,7 +23,8 @@ public class Constants {
     public static final int kIntakeMotorPort = 2;
     public static final double kIntakeMotorSpeed = 0.8;
 
-    public static final int kLiftMotorPort = 20;
+    //public static final int kLiftMotorPort = 20;
+    public static final int kLiftMotorPort = 2;
     public static final double kLiftMotorSpeed = 1;
 
     public static final int kColorWheelMotorPort = 21;

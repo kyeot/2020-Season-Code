@@ -29,6 +29,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubSystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubSystem;
+import frc.robot.subsystems.NeoLiftSubSystem;
 import frc.robot.subsystems.LEDSubSystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -51,7 +52,7 @@ public class RobotContainer {
   private final ColorWheelSystem mColorWheelSubsystem = new ColorWheelSystem();
   private final ShooterSubSystem mShooterSubsystem = new ShooterSubSystem();
   private final LEDSubSystem mLEDSubsystem = new LEDSubSystem();
-  private final LiftSubSystem mLiftSubsystem = new LiftSubSystem();
+  private final NeoLiftSubSystem mNeoLiftSubsystem = new NeoLiftSubSystem();
   //private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
 
 
@@ -60,7 +61,7 @@ public class RobotContainer {
   private final XboxController mManipulatorController = new XboxController(Constants.kManipulatorController);
   
 
-  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController,mManipulatorController,mLEDSubsystem,mLiftSubsystem);
+  private final DriveCommand mDriveCommand = new DriveCommand(mDriveSubsystem,mDriverController,mManipulatorController,mLEDSubsystem,mNeoLiftSubsystem);
 
   private final SequentialCommandGroup StraightAutonomous = new DefaultAutonomous(mDriveSubsystem, mShooterSubsystem, mLEDSubsystem, mManipulatorController, 7);
 
@@ -93,7 +94,7 @@ public class RobotContainer {
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
 
         new JoystickButton(mManipulatorController, Button.kStickLeft.value )
-        .whenPressed(new ExtendLiftCommand (mLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(3));
+        .whenPressed(new ExtendLiftCommand (mNeoLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(3));
 
         new JoystickButton(mManipulatorController, Button.kBumperRight.value)
         .whenPressed(new ColorWheelCommand(mColorWheelSubsystem,mLEDSubsystem,mManipulatorController,true).withTimeout(20));
