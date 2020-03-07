@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ColorWheelCommand;
 import frc.robot.commands.DefaultAutonomous;
 import frc.robot.commands.DriveADistanceInFeet;
+import frc.robot.commands.DriveAlongTheWallCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDCommand;
@@ -94,6 +95,9 @@ public class RobotContainer {
 
         //new JoystickButton(mDriverController, Button.kX.value)
         //.whenPressed(new VisionCommand(mVisionSubsystem,mDriveSubsystem ).withTimeout(20));
+
+        //new JoystickButton(mDriverController, Button.kX.value)
+        //.whenPressed(new DriveAlongTheWallCommand(mDriveSubsystem, mUltraSonicSubsystem, 5, true) .withTimeout(5));
 
         new JoystickButton(mManipulatorController, Button.kStickLeft.value )
         .whenPressed(new ExtendLiftCommand (mNeoLiftSubsystem, mLEDSubsystem,mManipulatorController).withTimeout(3));

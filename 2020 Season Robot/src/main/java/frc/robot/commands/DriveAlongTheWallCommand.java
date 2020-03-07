@@ -64,12 +64,24 @@ public class DriveAlongTheWallCommand extends CommandBase {
     }
     else {
       SmartDashboard.putString("Commnad Heading: ","" + mDriveSubsystem.getHeading()  );
-      mDriveSubsystem.SetRightDriveSpeed(-dRightDriveSpeed + (Constants.DriveConstants.kAutonomousDriveSpeed * mDriveSubsystem.getHeading() * .03 ));
-      mDriveSubsystem.SetLeftDriveSpeed(-dLeftDriveSpeed );
+
+      CalculateDriveModifiers( );
+      
+      SmartDashboard.putString("leftDriveSpeed","s " + dLeftDriveSpeed  );
+      SmartDashboard.putString("rightDriveSpeed","s "  + dRightDriveSpeed );
+
+      if (bReverse) {
+        mDriveSubsystem.SetLeftDriveSpeed(-dRightDriveSpeed );
+        mDriveSubsystem.SetRightDriveSpeed(-dLeftDriveSpeed );
+      } else {
+        mDriveSubsystem.SetRightDriveSpeed(-dRightDriveSpeed );
+        mDriveSubsystem.SetLeftDriveSpeed(-dLeftDriveSpeed );
+      }
+
     }
   }
 
-  private void CalculateDriveModifiers(double leftDriveSpeed, double rightDriveSpeed) {
+  private void CalculateDriveModifiers() {
      
     if (bFirstRun ) 
     {
@@ -85,7 +97,7 @@ public class DriveAlongTheWallCommand extends CommandBase {
         
         if (Math.abs(kHoldDistance - dNewDistanceToTarget ) < 1 && Math.abs(dLastDistanceToTarget - dNewDistanceToTarget) < 0.05 ) 
         {
-
+          SmartDashboard.putString("Wall Status ","straight"    );
           if (bReverse) 
           {
             dLeftDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
@@ -100,26 +112,57 @@ public class DriveAlongTheWallCommand extends CommandBase {
         else 
         {
          // need to check if we are too close or too far before these calcuations are made
-
-          if (dLastDistanceToTarget > dNewDistanceToTarget) 
+          
+          if (kHoldDistance < dNewDistanceToTarget)
           {
-            if (dLastDistanceToTarget - dNewDistanceToTarget > 0.1) {
-              leftDriveSpeed = leftDriveSpeed + (leftDriveSpeed * 0.5);
-            } else {
-              rightDriveSpeed = rightDriveSpeed + (rightDriveSpeed * 0.2);
+            //To Far
+            if (dLastDistanceToTarget > dNewDistanceToTarget) 
+            {
+              if (dLastDistanceToTarget - dNewDistanceToTarget > 0.1) {
+                SmartDashboard.putString("Wall Status ","Far->.1"    );
+                dLeftDriveSpeed = dLeftDriveSpeed + (dLeftDriveSpeed * 0.05);
+              } else {
+                SmartDashboard.putString("Wall Status ","Far-<.1"    );
+                dRightDriveSpeed = dRightDriveSpeed + (dRightDriveSpeed * 0.02);
+              }
+    
+            } 
+            else 
+            {
+              //wrong way
+              SmartDashboard.putString("Wall Status ","Far-Wrong way"    );
+              dLeftDriveSpeed = dLeftDriveSpeed * 0.7;
+              dRightDriveSpeed = dRightDriveSpeed * 1.2;
             }
-  
-          } else 
-          {
-            if (dNewDistanceToTarget - dLastDistanceToTarget > 0.1) {
-              rightDriveSpeed = rightDriveSpeed + (rightDriveSpeed * 0.5);
-            } else {
-              leftDriveSpeed = leftDriveSpeed + (leftDriveSpeed * 0.2);
-            }
-  
           }
+          else
+          {
+            //To Close 
+            if (dLastDistanceToTarget < dNewDistanceToTarget) 
+            {
+              if (dNewDistanceToTarget - dLastDistanceToTarget > 0.1) {
+                SmartDashboard.putString("Wall Status ","Close->.1"    );
+                dRightDriveSpeed = dRightDriveSpeed + (dRightDriveSpeed * 0.05);
+              } else {
+                SmartDashboard.putString("Wall Status ","Close-<.1"    );
+                dLeftDriveSpeed= dLeftDriveSpeed + (dLeftDriveSpeed * 0.02);
+              }
+            }
+            else
+            {
+              //wrong way
+              SmartDashboard.putString("Wall Status ","CLose-Wrong way"    );
+              dLeftDriveSpeed = dLeftDriveSpeed * 1.3;
+              dRightDriveSpeed = dRightDriveSpeed * 0.7;
+            }
+          }
+
+
         }
 
+       // if (Math.abs(dRightDriveSpeed) - Math.abs(dRightDriveSpeed))
+
+        dLastDistanceToTarget = dNewDistanceToTarget;
       }
 
    //   add saftety if left or right delta too big
@@ -127,6 +170,9 @@ public class DriveAlongTheWallCommand extends CommandBase {
 //if distance less than 29, hard turn
 
     }
+
+
+
   }
 
   // Called once the command ends or is interrupted.

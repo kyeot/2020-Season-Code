@@ -20,17 +20,17 @@ public class Constants {
     public static final double kGyroMaxAge = 0.6;   
     public static final double kRobotFront = 180;
 
-    public static final int kIntakeMotorPort = 2;
+    public static final int kIntakeMotorPort = 5;
     public static final double kIntakeMotorSpeed = 0.8;
 
     //public static final int kLiftMotorPort = 20;
-    public static final int kLiftMotorPort = 2;
+    public static final int kLiftMotorPort = 21;
     public static final double kLiftMotorSpeed = 1;
 
-    public static final int kColorWheelMotorPort = 21;
+    public static final int kColorWheelMotorPort = 6;
     public static final double kColorWheelMotorSpeed = 0.3;
 
-    public static final int kFeederMotorPort = 22;
+    public static final int kFeederMotorPort = 4;
     public static final double kFeederMotorSpeed = -0.7;
     public static final double kFeederMotorSpeedSlow = -0.2;
 
@@ -55,7 +55,7 @@ public class Constants {
        
      
         public static final int kLeftMotor1Port = 12;
-        public static final int kLeftMotor2Port = 24;
+        public static final int kLeftMotor2Port = 13;
         public static final int kRightMotor1Port = 14;
         public static final int kRightMotor2Port = 15;
         
@@ -78,7 +78,7 @@ public class Constants {
         //public static final double kEncoderDistancePerPulse = 0.045977;
 
         public static final double kEncoderFootPerDistance = 24.05;
-        public static final double kAutonomousDriveSpeed = 0.4;
+        public static final double kAutonomousDriveSpeed = 0.2;
 
         public static final int kEncoderCPR = 1024;
         public static final double kWheelDiameterInches = 6;
@@ -107,7 +107,7 @@ public class Constants {
       }
 
       public static final class ShooterConstants {
-        public static final int kShooterMotorPort = 1;
+        public static final int kShooterMotorPort = 20;
       }
 
 

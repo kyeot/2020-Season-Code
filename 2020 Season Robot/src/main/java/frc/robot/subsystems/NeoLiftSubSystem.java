@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -24,12 +25,9 @@ public class NeoLiftSubSystem extends SubsystemBase {
   CANSparkMax mLiftMotor;
   private DutyCycleEncoder mEncoder;
   public NeoLiftSubSystem() {
-    try {
-      mLiftMotor = new CANSparkMax(Constants.kLiftMotorPort, null);
-      //mLiftMotor.setNeutralMode( NeutralMode.Brake );
-		} catch (RuntimeException ex) {
-			DriverStation.reportError("Error Lift Motor Controller:  " + ex.getMessage(), true);
-    }
+
+
+    mLiftMotor = new CANSparkMax(Constants.kLiftMotorPort, MotorType.kBrushless);
 
     try {
       mEncoder = new DutyCycleEncoder(4);
