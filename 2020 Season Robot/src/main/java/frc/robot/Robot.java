@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -128,4 +129,34 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     
   }
+
+
+	public static String parseMatchTime() {
+		double s = DriverStation.getInstance().getMatchTime();
+
+		if (s != -1.0) {
+			if (DriverStation.getInstance().isAutonomous()) {
+
+				int t = (int) (15 - Math.ceil(s));
+				return ":" + Integer.toString((int) t) + " (Auton)";
+
+			} else if (DriverStation.getInstance().isOperatorControl()) {
+
+				int t = (int) (135 - Math.ceil(s));
+				return Integer.toString((int) Math.floor(t / 60)) + ":" + Integer.toString((int) t % 60) + " (TeleOp)";
+
+			} else {
+
+				return "Disabled";
+
+			}
+
+		} else {
+
+			return "Not Practice";
+
+		}
+
+	}
+
 }
