@@ -15,8 +15,8 @@ import frc.robot.subsystems.DriveSubsystem;
 public class LimeTurnToTarget extends CommandBase {
 
   final double STEER_K = -0.03;                    // how hard to turn toward the target
-  final double MIN_COMMAND_K = 0.05;
-  final double MAX_SPEED = 3;
+  final double MIN_COMMAND_K = 0.025;
+  final double MAX_SPEED = 0.3;
 
 
   private final DriveSubsystem mDriveSubsystem;
@@ -53,11 +53,11 @@ public class LimeTurnToTarget extends CommandBase {
       double steering_adjust = 0.0;
       if (tx > 1.0)
       {
-              steering_adjust = STEER_K * heading_error - MIN_COMMAND_K;
+              steering_adjust = STEER_K * heading_error + MIN_COMMAND_K;
       }
       else if (tx < 1.0)
       {
-              steering_adjust = STEER_K * heading_error + MIN_COMMAND_K;
+              steering_adjust = STEER_K * heading_error - MIN_COMMAND_K;
       }
       dLeftSpeed += steering_adjust;
       dRightSpeed -= steering_adjust;

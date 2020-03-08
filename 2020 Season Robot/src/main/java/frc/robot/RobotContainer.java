@@ -101,7 +101,7 @@ public class RobotContainer {
         //.whenPressed(new DriveAlongTheWallCommand(mDriveSubsystem, mUltraSonicSubsystem, 5, true) .withTimeout(5));
 
        new JoystickButton(mDriverController, Button.kX.value)
-        .whenPressed(new LimeTurnToTarget(mDriveSubsystem).withTimeout(5));
+        .whenPressed(new LimeTurnToTarget(mDriveSubsystem).withTimeout(3));
 
 
         new JoystickButton(mManipulatorController, Button.kStickLeft.value )

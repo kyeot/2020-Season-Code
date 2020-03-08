@@ -24,8 +24,7 @@ public class DriveAlongTheWallCommand extends CommandBase {
   int kHoldDistance = 40;
   double dLastTime = 0;
   double dLastDistanceToTarget = 0;
-  double dRightDriveSpeed= 0;
-  double dLeftDriveSpeed=0;
+
 
   public DriveAlongTheWallCommand(DriveSubsystem drive, UltraSonicSubsystem ultrasonicsubsystem, double distanceinfeet, boolean reverse) {
     mDistanceInFeet = distanceinfeet;
@@ -39,141 +38,51 @@ public class DriveAlongTheWallCommand extends CommandBase {
   @Override
   public void initialize() {
     mDriveSubsystem.resetEncoders();
-    if (bReverse) {
-      dLeftDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
-      dRightDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
-    } else {
-      dLeftDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
-      dRightDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
-    }
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     double dDriveSpeed;
 
+    if (bReverse) {
+      dDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
+    } else {
+      dDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
+    }
 
 
     //robotdrive.drive(SPEED, Gyro.getAngle() * .03);
     if (bFirstRun == true) {
       SmartDashboard.putString("Initial Heading: ","" + mDriveSubsystem.getHeading()  );
-      mDriveSubsystem.SetRightDriveSpeed(-dRightDriveSpeed  );
-      mDriveSubsystem.SetLeftDriveSpeed(-dLeftDriveSpeed );
+      mDriveSubsystem.SetRightDriveSpeed(dDriveSpeed  );
+      mDriveSubsystem.SetLeftDriveSpeed(dDriveSpeed );
       bFirstRun = false;
     }
     else {
       SmartDashboard.putString("Commnad Heading: ","" + mDriveSubsystem.getHeading()  );
 
-      CalculateDriveModifiers( );
+      //CalculateDriveModifiers( );
+      double dNewDistanceToTarget = mUltraSonicSubsystem.GetSensorDistanceInInches();
+      double dDeltaDistance = kHoldDistance - dNewDistanceToTarget;
+      double dSteerSpeed = dDriveSpeed = dDriveSpeed + (Constants.DriveConstants.kAutonomousDriveSpeed * dDeltaDistance * .02 );
       
-      SmartDashboard.putString("leftDriveSpeed","s " + dLeftDriveSpeed  );
-      SmartDashboard.putString("rightDriveSpeed","s "  + dRightDriveSpeed );
+      dLastDistanceToTarget = dNewDistanceToTarget;
 
       if (bReverse) {
-        mDriveSubsystem.SetLeftDriveSpeed(-dRightDriveSpeed );
-        mDriveSubsystem.SetRightDriveSpeed(-dLeftDriveSpeed );
+        mDriveSubsystem.SetLeftDriveSpeed(dDriveSpeed );
+        mDriveSubsystem.SetRightDriveSpeed(dSteerSpeed );
       } else {
-        mDriveSubsystem.SetRightDriveSpeed(-dRightDriveSpeed );
-        mDriveSubsystem.SetLeftDriveSpeed(-dLeftDriveSpeed );
+        mDriveSubsystem.SetLeftDriveSpeed(dSteerSpeed );
+        mDriveSubsystem.SetRightDriveSpeed(dDriveSpeed);
       }
 
     }
   }
 
-  private void CalculateDriveModifiers() {
-     
-    if (bFirstRun ) 
-    {
-      dLastTime =Timer.getFPGATimestamp();
-      dLastDistanceToTarget = mUltraSonicSubsystem.GetSensorDistanceInInches();
-    } 
-    else 
-    {
-      if (Timer.getFPGATimestamp() - dLastTime > 0.1) 
-      {
-        dLastTime =Timer.getFPGATimestamp();
-        double dNewDistanceToTarget = mUltraSonicSubsystem.GetSensorDistanceInInches();
-        
-        if (Math.abs(kHoldDistance - dNewDistanceToTarget ) < 1 && Math.abs(dLastDistanceToTarget - dNewDistanceToTarget) < 0.05 ) 
-        {
-          SmartDashboard.putString("Wall Status ","straight"    );
-          if (bReverse) 
-          {
-            dLeftDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
-            dRightDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
-          } else 
-          {
-            dLeftDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
-            dRightDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
-          }
 
-        } 
-        else 
-        {
-         // need to check if we are too close or too far before these calcuations are made
-          
-          if (kHoldDistance < dNewDistanceToTarget)
-          {
-            //To Far
-            if (dLastDistanceToTarget > dNewDistanceToTarget) 
-            {
-              if (dLastDistanceToTarget - dNewDistanceToTarget > 0.1) {
-                SmartDashboard.putString("Wall Status ","Far->.1"    );
-                dLeftDriveSpeed = dLeftDriveSpeed + (dLeftDriveSpeed * 0.05);
-              } else {
-                SmartDashboard.putString("Wall Status ","Far-<.1"    );
-                dRightDriveSpeed = dRightDriveSpeed + (dRightDriveSpeed * 0.02);
-              }
-    
-            } 
-            else 
-            {
-              //wrong way
-              SmartDashboard.putString("Wall Status ","Far-Wrong way"    );
-              dLeftDriveSpeed = dLeftDriveSpeed * 0.7;
-              dRightDriveSpeed = dRightDriveSpeed * 1.2;
-            }
-          }
-          else
-          {
-            //To Close 
-            if (dLastDistanceToTarget < dNewDistanceToTarget) 
-            {
-              if (dNewDistanceToTarget - dLastDistanceToTarget > 0.1) {
-                SmartDashboard.putString("Wall Status ","Close->.1"    );
-                dRightDriveSpeed = dRightDriveSpeed + (dRightDriveSpeed * 0.05);
-              } else {
-                SmartDashboard.putString("Wall Status ","Close-<.1"    );
-                dLeftDriveSpeed= dLeftDriveSpeed + (dLeftDriveSpeed * 0.02);
-              }
-            }
-            else
-            {
-              //wrong way
-              SmartDashboard.putString("Wall Status ","CLose-Wrong way"    );
-              dLeftDriveSpeed = dLeftDriveSpeed * 1.3;
-              dRightDriveSpeed = dRightDriveSpeed * 0.7;
-            }
-          }
-
-
-        }
-
-       // if (Math.abs(dRightDriveSpeed) - Math.abs(dRightDriveSpeed))
-
-        dLastDistanceToTarget = dNewDistanceToTarget;
-      }
-
-   //   add saftety if left or right delta too big
-
-//if distance less than 29, hard turn
-
-    }
-
-
-
-  }
 
   // Called once the command ends or is interrupted.
   @Override

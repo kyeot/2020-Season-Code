@@ -54,16 +54,16 @@ public class Constants {
        // competition settings
        
      
-        public static final int kLeftMotor1Port = 12;
-        public static final int kLeftMotor2Port = 13;
-        public static final int kRightMotor1Port = 14;
-        public static final int kRightMotor2Port = 15;
+       // public static final int kLeftMotor1Port = 12;
+       // public static final int kLeftMotor2Port = 13;
+       // public static final int kRightMotor1Port = 14;
+       // public static final int kRightMotor2Port = 15;
         
 
-        //public static final int kLeftMotor1Port = 11;
-        //public static final int kLeftMotor2Port = 12;
-        //public static final int kRightMotor1Port = 13;
-        //public static final int kRightMotor2Port = 15;
+        public static final int kLeftMotor1Port = 11;
+        public static final int kLeftMotor2Port = 12;
+        public static final int kRightMotor1Port = 13;
+        public static final int kRightMotor2Port = 15;
 
         public static final int kUltrasonicPort = 0;
         public static double kValueToInches = 0.125;
