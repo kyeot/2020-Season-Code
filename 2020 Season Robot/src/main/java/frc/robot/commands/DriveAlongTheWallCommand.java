@@ -48,9 +48,9 @@ public class DriveAlongTheWallCommand extends CommandBase {
     double dDriveSpeed;
 
     if (bReverse) {
-      dDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
-    } else {
       dDriveSpeed = Constants.DriveConstants.kAutonomousDriveSpeed;
+    } else {
+      dDriveSpeed = -Constants.DriveConstants.kAutonomousDriveSpeed;
     }
 
 

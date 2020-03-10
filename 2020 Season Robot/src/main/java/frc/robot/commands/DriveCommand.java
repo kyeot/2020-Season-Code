@@ -160,8 +160,10 @@ public class DriveCommand extends CommandBase {
 
 	SmartDashboard.putString("Encoder","" + mNeoLiftSubSystem.GetEncoderDistance() );
     SmartDashboard.putString("reverseButton1Toggle","" + reverseButton1Toggle);
-    SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
-    SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
+    //SmartDashboard.putString("l Distance","" + mDriveSubSystem.getLeftEncoderDistance() );
+	//SmartDashboard.putString("r Distance","" + mDriveSubSystem.getRightEncoderDistance() );
+	SmartDashboard.putString("DB/String 4", "l Distance"  + mDriveSubSystem.getLeftEncoderDistance() );
+    SmartDashboard.putString("DB/String 5", "r Distance" + mDriveSubSystem.getRightEncoderDistance() );
 	SmartDashboard.putString("Heading: ","" + mDriveSubSystem.getHeading());
 	SmartDashboard.putString("POV2: ","" + mDriverController.getPOV()) ;
 		

@@ -20,7 +20,7 @@ public class Constants {
     public static final double kGyroMaxAge = 0.6;   
     public static final double kRobotFront = 180;
 
-    public static final int kIntakeMotorPort = 5;
+    public static final int kIntakeMotorPort = 4;
     public static final double kIntakeMotorSpeed = 0.8;
 
     //public static final int kLiftMotorPort = 20;
@@ -30,7 +30,7 @@ public class Constants {
     public static final int kColorWheelMotorPort = 6;
     public static final double kColorWheelMotorSpeed = 0.3;
 
-    public static final int kFeederMotorPort = 4;
+    public static final int kFeederMotorPort = 5;
     public static final double kFeederMotorSpeed = -0.7;
     public static final double kFeederMotorSpeedSlow = -0.2;
 
@@ -54,16 +54,16 @@ public class Constants {
        // competition settings
        
      
-       // public static final int kLeftMotor1Port = 12;
-       // public static final int kLeftMotor2Port = 13;
-       // public static final int kRightMotor1Port = 14;
-       // public static final int kRightMotor2Port = 15;
+        public static final int kLeftMotor1Port = 12;
+        public static final int kLeftMotor2Port = 13;
+        public static final int kRightMotor1Port = 14;
+        public static final int kRightMotor2Port = 15;
         
 
-        public static final int kLeftMotor1Port = 11;
-        public static final int kLeftMotor2Port = 12;
-        public static final int kRightMotor1Port = 13;
-        public static final int kRightMotor2Port = 15;
+        //public static final int kLeftMotor1Port = 11;
+        //public static final int kLeftMotor2Port = 12;
+        //public static final int kRightMotor1Port = 13;
+        //public static final int kRightMotor2Port = 15;
 
         public static final int kUltrasonicPort = 0;
         public static double kValueToInches = 0.125;
